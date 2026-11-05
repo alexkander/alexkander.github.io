@@ -23,3 +23,7 @@ Defined in `src/content.config.ts`. Each entry is a Markdown/MDX file whose file
 ## CV
 
 `/cv` renders the profile data as a CV. It is not linked in the main navigation. Its print styles hide the site chrome, so "Save as PDF" (the browser's print dialog) produces the PDF. Automated PDF generation at build time is pending.
+
+## Privacy page
+
+`/privacy` (`src/pages/privacy.astro`) is the public summary of [Privacy and compliance](privacy.md). Update both, and the page's "Last updated" date, whenever data processing changes.

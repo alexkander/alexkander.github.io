@@ -13,6 +13,7 @@ pnpm dev
 
 - [Project](docs/project.md)
 - [Public repository](docs/public-repository.md): what must never be committed
+- [Privacy and compliance](docs/privacy.md): legal framework and rules for any feature that handles personal data
 - [Architecture](docs/architecture.md)
 - [Development](docs/development.md)
 - [Content](docs/content.md)

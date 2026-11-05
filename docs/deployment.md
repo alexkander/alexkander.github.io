@@ -23,3 +23,4 @@ Pending implementation.
 1. **Build**: GitHub Actions builds the static site and packages it into a lightweight Docker image (static file server), pushed to GHCR.
 2. **Deploy**: the image runs on the home lab **k3s** cluster, reconciled by **Flux** (GitOps).
 3. **Exposure**: a **Cloudflare Tunnel** (`cloudflared`) routes `alexkander.dev` to the cluster; no ports are opened, and Cloudflare provides HTTPS and CDN caching.
+4. **Logs**: web server access logs must be kept for at most 14 days, as stated in the `/privacy` page (see [Privacy](privacy.md)).

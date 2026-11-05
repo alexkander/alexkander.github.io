@@ -10,8 +10,8 @@ import { formatMonth, formatRange, profile } from '../data/profile';
       <p class="muted">{profile.title}</p>
       <p class="contact">
         <a href={`mailto:${profile.email}`}>{profile.email}</a>
-        <a href={profile.links.github}>github.com/alexkander</a>
-        <a href={profile.links.linkedin}>linkedin.com/in/arondn2</a>
+        <a href={profile.links.github} target="_blank" rel="noopener noreferrer">github.com/alexkander</a>
+        <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer">linkedin.com/in/arondn2</a>
         <a href="https://alexkander.dev">alexkander.dev</a>
       </p>
       <button type="button" class="print" onclick="window.print()">Save as PDF</button>

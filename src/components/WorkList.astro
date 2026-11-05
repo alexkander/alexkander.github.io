@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatYears } from '../lib/content';
+
+interface Props {
+  entries: CollectionEntry<'projects' | 'products'>[];
+  base: string;
+}
+
+const { entries, base } = Astro.props;
+---
+
+{
+  entries.length === 0 ? (
+    <p class="muted">Nothing here yet.</p>
+  ) : (
+    <ul class="list">
+      {entries.map((entry) => (
+        <li>
+          <a href={`${base}${entry.id}/`}>{entry.data.title}</a>
+          <span class="muted"> · {formatYears(entry.data.start, entry.data.end)}</span>
+          <div>{entry.data.description}</div>
+          {entry.data.stack.length > 0 && <div class="muted">{entry.data.stack.join(' · ')}</div>}
+        </li>
+      ))}
+    </ul>
+  )
+}

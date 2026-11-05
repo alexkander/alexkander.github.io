@@ -1,0 +1,164 @@
+---
+import Base from '../layouts/Base.astro';
+import { formatMonth, formatRange, profile } from '../data/profile';
+---
+
+<Base title="CV" description={`CV of ${profile.name}, ${profile.title}.`}>
+  <article class="cv">
+    <header>
+      <h1>{profile.name}</h1>
+      <p class="muted">{profile.title}</p>
+      <p class="contact">
+        <a href={`mailto:${profile.email}`}>{profile.email}</a>
+        <a href={profile.links.github}>github.com/alexkander</a>
+        <a href={profile.links.linkedin}>linkedin.com/in/arondn2</a>
+        <a href="https://alexkander.dev">alexkander.dev</a>
+      </p>
+      <button type="button" class="print" onclick="window.print()">Save as PDF</button>
+    </header>
+
+    <p>{profile.summary}</p>
+
+    <section>
+      <h2>Experience</h2>
+      {
+        profile.experience.map((role) => (
+          <div class="entry">
+            <h3>
+              {role.title} · {role.company}
+            </h3>
+            <p class="muted">{formatRange(role.start, role.end)}</p>
+            {role.highlights && (
+              <ul>
+                {role.highlights.map((h) => <li>{h}</li>)}
+              </ul>
+            )}
+            {role.engagements?.map((e) => (
+              <div class="engagement">
+                <h4>
+                  {e.name} <span class="muted">· {formatRange(e.start, e.end)}</span>
+                </h4>
+                <ul>
+                  {e.highlights.map((h) => <li>{h}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+        ))
+      }
+    </section>
+
+    <section>
+      <h2>Skills</h2>
+      <dl>
+        {
+          profile.skills.map((s) => (
+            <>
+              <dt>{s.group}</dt>
+              <dd>{s.items.join(', ')}</dd>
+            </>
+          ))
+        }
+      </dl>
+    </section>
+
+    <section>
+      <h2>Open source</h2>
+      <ul>{profile.openSource.map((item) => <li>{item}</li>)}</ul>
+    </section>
+
+    <section>
+      <h2>Education</h2>
+      {
+        profile.education.map((e) => (
+          <p>
+            {e.degree} · {e.school} <span class="muted">· {e.start} – {e.end}</span>
+          </p>
+        ))
+      }
+      {
+        profile.teaching.map((t) => (
+          <p>
+            {t.title} · {t.school} <span class="muted">· {formatRange(t.start, t.end)}</span>
+          </p>
+        ))
+      }
+    </section>
+
+    <section>
+      <h2>Talks</h2>
+      <ul>
+        {
+          profile.talks.map((t) => (
+            <li>
+              {t.title} · {t.event} <span class="muted">· {formatMonth(t.date)}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section>
+      <h2>Interests</h2>
+      <p>{profile.interests.join(' · ')}</p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .cv h3 {
+    margin-bottom: 0;
+  }
+  .cv h3 + .muted {
+    margin-top: 0.2rem;
+  }
+  .cv h4 {
+    margin: 0.75rem 0 0;
+    font-weight: 500;
+  }
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1rem;
+  }
+  dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.25rem 1rem;
+  }
+  dt {
+    font-weight: 500;
+  }
+  dd {
+    margin: 0;
+  }
+  .print {
+    font: inherit;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--fg);
+    cursor: pointer;
+  }
+
+  @media print {
+    :global(.site-header),
+    :global(.site-footer),
+    .print {
+      display: none;
+    }
+    :global(body) {
+      background: #fff;
+      color: #000;
+      font-size: 10.5pt;
+      line-height: 1.4;
+    }
+    :global(main) {
+      max-width: none;
+    }
+    .entry {
+      break-inside: avoid;
+    }
+  }
+</style>

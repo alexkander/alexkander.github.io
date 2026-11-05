@@ -1,0 +1,12 @@
+---
+import Base from '../../layouts/Base.astro';
+import WorkList from '../../components/WorkList.astro';
+import { getWork } from '../../lib/content';
+
+const products = await getWork('products');
+---
+
+<Base title="Products" description="Products I build and maintain.">
+  <h1>Products</h1>
+  <WorkList entries={products} base="/products/" />
+</Base>

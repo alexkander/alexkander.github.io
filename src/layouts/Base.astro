@@ -1,0 +1,71 @@
+---
+import '../styles/global.css';
+import { profile } from '../data/profile';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = profile.tagline } = Astro.props;
+const pageTitle = title ? `${title} · ${profile.shortName}` : `${profile.shortName} · ${profile.title}`;
+const nav = [
+  { href: '/posts/', label: 'Posts' },
+  { href: '/projects/', label: 'Projects' },
+  // Add { href: '/products/', label: 'Products' } once the first product exists.
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title={profile.shortName} href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+    <slot name="head" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav>
+        <a href="/" class="home">{profile.shortName}</a>
+        {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer muted">
+      <a href={profile.links.github}>GitHub</a>
+      <a href={profile.links.linkedin}>LinkedIn</a>
+      <a href="/rss.xml">RSS</a>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .site-header nav {
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem 0;
+  }
+  .site-header .home {
+    margin-right: auto;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .site-footer {
+    display: flex;
+    gap: 1rem;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+    font-size: 0.9rem;
+  }
+</style>

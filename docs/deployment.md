@@ -18,9 +18,22 @@ The same static build is published to two targets:
 
 ## Home lab
 
-Pending implementation.
+Deployed with Flux, following the home lab's convention for apps (`infrahomelab` repo, `docs/flux-apps.md`), with one difference: every push to `main` deploys, so publishing a post works the same on both targets.
 
-1. **Build**: GitHub Actions builds the static site and packages it into a lightweight Docker image (static file server), pushed to GHCR.
-2. **Deploy**: the image runs on the home lab **k3s** cluster, reconciled by **Flux** (GitOps).
-3. **Exposure**: a **Cloudflare Tunnel** (`cloudflared`) routes `alexkander.dev` to the cluster; no ports are opened, and Cloudflare provides HTTPS and CDN caching.
-4. **Logs**: web server access logs must be kept for at most 14 days, as stated in the `/privacy` page (see [Privacy](privacy.md)).
+1. **Image**: `Dockerfile` builds the site and serves `dist/` with an unprivileged nginx on port 8080 (`docker/nginx.conf`). It is pushed to `ghcr.io/alexkander/alexkander.github.io:<version>-<sha7>` (private), `<version>` being `package.json`'s.
+2. **Release**: `scripts/deploy-homelab.sh` builds and pushes the image for `origin/main`, merges `main` into the `production` branch, and pins the tag in `deploy/kustomization.yaml` there. On `main`, `newTag` is always `unreleased`; never commit to `production` by hand except for a rollback.
+3. **Deploy**: Flux applies `production`'s `deploy/` (Deployment and a NodePort Service, port 30980) to the `personal-website` namespace within 5 minutes. The namespace enforces Pod Security `restricted`, and the Deployment has no `replicas`.
+4. **Exposure**: the home lab ingress routes `alexkander.dev` (the only hostname; there is no `www`) to the NodePort through a Cloudflare Tunnel; no ports are opened, and Cloudflare provides HTTPS and CDN caching.
+5. **Logs**: nginx logs no client IP addresses. Access logs that carry IPs (ingress) must be kept for at most 14 days, as stated in the `/privacy` page (see [Privacy](privacy.md)).
+
+The home lab side (Flux registration, pull secret, NodePort firewall, ingress route, DNS) lives in the `infrahomelab` repository.
+
+### Deploying
+
+- **Automatic**: `.github/workflows/deploy-homelab.yml` runs the script on every push to `main` that changes more than docs.
+- **From GitHub**: run the workflow by hand (`workflow_dispatch`), e.g. `gh workflow run deploy-homelab.yml`.
+- **Locally**: `pnpm deploy:homelab`, with `main` pushed and checked out, a clean working tree, `docker login ghcr.io` done with a token that has `write:packages`, and `yq` installed.
+
+### Rollback
+
+On `production`, `git revert` the `chore(deploy): release …` commit (or set an older tag in `deploy/kustomization.yaml`) and push. The next deploy overrides it, so fix or revert the change on `main` too. Never roll back with `kubectl`: Flux undoes it.

@@ -11,7 +11,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "check": "astro check"
+    "check": "astro check",
+    "deploy:homelab": "scripts/deploy-homelab.sh"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.1.2",

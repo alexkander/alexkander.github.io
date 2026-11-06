@@ -9,6 +9,7 @@ Requires Node.js (see `engines` in `package.json`) and pnpm.
 | `pnpm build` | Build the static site into `dist/` (drafts excluded) |
 | `pnpm preview` | Serve the production build locally |
 | `pnpm check` | Type-check `.astro` and `.ts` files |
+| `pnpm deploy:homelab` | Deploy `origin/main` to the home lab (see [Deployment](deployment.md)) |
 
 When an agent starts the dev server, use background mode: `pnpm astro dev --background`, and manage it with `pnpm astro dev stop | status | logs`.
 

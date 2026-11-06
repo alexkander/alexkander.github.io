@@ -35,7 +35,7 @@ trap 'git worktree remove --force "$worktree"' EXIT
 if git fetch --quiet origin production 2>/dev/null; then
   git worktree add --quiet --detach "$worktree" origin/production
   # deploy/kustomization.yaml is the only file production changes: take main's and pin it below.
-  git -C "$worktree" merge --quiet --no-ff --no-commit "$sha" || true
+  git -C "$worktree" merge --quiet --no-ff --no-commit -m "Merge main into production" "$sha" >/dev/null 2>&1 || true
   git -C "$worktree" checkout "$sha" -- deploy/kustomization.yaml
   if [ -n "$(git -C "$worktree" diff --name-only --diff-filter=U)" ]; then
     echo "merging main into production conflicts" >&2

@@ -24,15 +24,15 @@ Deployed with Flux, following the home lab's convention for apps (`infrahomelab`
 2. **Release**: `scripts/deploy-homelab.sh` builds and pushes the image for `origin/main`, merges `main` into the `production` branch, and pins the tag in `deploy/kustomization.yaml` there. On `main`, `newTag` is always `unreleased`; never commit to `production` by hand except for a rollback.
 3. **Deploy**: Flux applies `production`'s `deploy/` (Deployment and a NodePort Service, port 30980) to the `personal-website` namespace within 5 minutes. The namespace enforces Pod Security `restricted`, and the Deployment has no `replicas`.
 4. **Exposure**: the home lab ingress routes `alexkander.dev` (and `www.alexkander.dev`, redirected to it with a 301) to the NodePort through a Cloudflare Tunnel; no ports are opened, and Cloudflare provides HTTPS and CDN caching.
-5. **Logs**: nginx logs no client IP addresses. The ingress strips `X-Forwarded-For` and `Cf-Connecting-Ip` from this site's lines before shipping them to Loki, which keeps them for 14 days. Any log that carries IPs must be kept for at most 14 days, as stated in the `/privacy` page (see [Privacy](privacy.md)).
+5. **Logs**: nginx logs no client IP addresses. The ingress keeps its raw access log, which carries IPs, in a file rotated daily with 14 kept. It strips `X-Forwarded-For` and `Cf-Connecting-Ip` from this site's lines before shipping them to Loki, which keeps them for 14 days. Any log that carries IPs must be kept for at most 14 days, as stated in the `/privacy` page (see [Privacy](privacy.md)).
 
-The home lab side (Flux registration, pull secret, NodePort firewall, ingress route, DNS) lives in the `infrahomelab` repository.
+The home lab side (Flux registration, NodePort firewall, ingress route, DNS) lives in the `infrahomelab` repository.
 
 ### Deploying
 
-- **Automatic**: `.github/workflows/deploy-homelab.yml` runs the script on every push to `main` that changes more than docs. It reaches the forge through the tailnet and logs in with the repository secret `FORGE_TOKEN` (a token under the forge's `alexkander` organization); without that secret it is skipped.
+- **Automatic**: `.github/workflows/deploy-homelab.yml` runs the script on every push to `main` that changes more than docs. It joins the tailnet with `tailscale/github-action` (workload identity federation, from the repository variables `TS_OAUTH_CLIENT_ID` and `TS_AUDIENCE`; no Tailscale secret) and logs in with the repository secret `FORGE_TOKEN` (a `forge-admin` token with the `write:package` scope, one per repository); without that secret it is skipped.
 - **From GitHub**: run the workflow by hand (`workflow_dispatch`), e.g. `gh workflow run deploy-homelab.yml`.
-- **Locally**: `pnpm deploy:homelab`, with `main` pushed and checked out, a clean working tree, the machine on the tailnet, and `docker login forge.home.alexkander.dev` done.
+- **Locally**: `pnpm deploy:homelab`, with `main` pushed and checked out, a clean working tree, the machine on the tailnet, and `docker login forge.home.alexkander.dev -u forge-admin` done.
 
 ### Rollback
 

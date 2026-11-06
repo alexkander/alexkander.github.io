@@ -7,4 +7,4 @@ resources:
   - service.yaml
 images:
   - name: forge.home.alexkander.dev/alexkander/alexkander.github.io
-    newTag: unreleased
+    newTag: 0.0.1-e4868fa

@@ -1,0 +1,55 @@
+# No replicas: the homelab's tooling owns scaling (infrahomelab docs/flux-apps.md).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: personal-website
+  labels:
+    app.kubernetes.io/name: personal-website
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: personal-website
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: personal-website
+    spec:
+      automountServiceAccountToken: false
+      imagePullSecrets:
+        - name: ghcr-pull
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: web
+          image: ghcr.io/alexkander/alexkander.github.io
+          ports:
+            - name: http
+              containerPort: 8080
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              memory: 64Mi
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}

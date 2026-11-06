@@ -1,4 +1,5 @@
 # Deploys every push to main to the home lab (docs/deployment.md → Home lab).
+# Skipped until the repository has the FORGE_TOKEN secret.
 name: Deploy to the home lab
 
 on:
@@ -9,7 +10,6 @@ on:
 
 permissions:
   contents: write
-  packages: write
 
 concurrency:
   group: deploy-homelab
@@ -18,13 +18,22 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      FORGE_TOKEN: ${{ secrets.FORGE_TOKEN }}
     steps:
+      - name: Check the forge token
+        if: env.FORGE_TOKEN == ''
+        run: echo "::notice::FORGE_TOKEN is not set; skipping the home lab deploy"
       - uses: actions/checkout@v7
+        if: env.FORGE_TOKEN != ''
         with:
           fetch-depth: 0
-      - name: Log in to GHCR
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+      # TODO(T402): tailscale/github-action step to reach the forge through the tailnet.
+      - name: Log in to the forge
+        if: env.FORGE_TOKEN != ''
+        run: echo "$FORGE_TOKEN" | docker login forge.home.alexkander.dev -u alexkander --password-stdin
       - name: Deploy
+        if: env.FORGE_TOKEN != ''
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

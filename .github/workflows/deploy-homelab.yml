@@ -36,7 +36,6 @@ jobs:
           oauth-client-id: ${{ vars.TS_OAUTH_CLIENT_ID }}
           audience: ${{ vars.TS_AUDIENCE }}
           tags: tag:ci
-          args: --accept-routes
       - name: Log in to the forge
         if: env.FORGE_TOKEN != ''
         run: echo "$FORGE_TOKEN" | docker login forge.home.alexkander.dev -u forge-admin --password-stdin

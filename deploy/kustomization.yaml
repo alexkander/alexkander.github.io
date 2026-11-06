@@ -7,4 +7,4 @@ resources:
   - service.yaml
 images:
   - name: ghcr.io/alexkander/alexkander.github.io
-    newTag: unreleased
+    newTag: 0.0.1-8b09f78

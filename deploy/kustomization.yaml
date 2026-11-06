@@ -6,5 +6,5 @@ resources:
   - deployment.yaml
   - service.yaml
 images:
-  - name: ghcr.io/alexkander/alexkander.github.io
-    newTag: 0.0.1-8b09f78
+  - name: forge.home.alexkander.dev/alexkander/alexkander.github.io
+    newTag: unreleased

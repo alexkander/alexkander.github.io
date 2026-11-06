@@ -42,7 +42,7 @@ This table is the record of processing activities (GDPR art. 30). Every feature 
 | Activity | Status | Personal data | Purpose | Lawful basis | Recipients / processors | Transfers outside the EU | Retention |
 |---|---|---|---|---|---|---|---|
 | Hosting on GitHub Pages (`alexkander.github.io`) | Active | IP address, user agent, requested URL (server logs) | Serve the site, security | Legitimate interest (art. 6.1.f) | GitHub, Inc. | United States, under the EU-US Data Privacy Framework | Per GitHub's privacy statement |
-| Hosting on the home lab (`alexkander.dev`) via Cloudflare | Planned | IP address, user agent, requested URL | Serve the site, security, caching | Legitimate interest (art. 6.1.f) | Cloudflare, Inc. (processor) | United States, under the EU-US Data Privacy Framework | Home lab server logs: max. 14 days (the site's nginx logs no IPs; the ingress strips them before shipping logs to Loki). Cloudflare: per its policy |
+| Hosting on the home lab (`alexkander.dev`) via Cloudflare | Planned | IP address, user agent, requested URL | Serve the site, security, caching | Legitimate interest (art. 6.1.f) | Cloudflare, Inc. (processor) | United States, under the EU-US Data Privacy Framework | Home lab server logs: max. 14 days (the site's nginx logs no IPs; the ingress's raw access log is rotated daily with 14 kept, and its copy in Loki has no IPs and is kept 14 days). Cloudflare: per its policy |
 | Email contact | Active | Name, email address, message content | Reply to the visitor | Visitor's request / legitimate interest (art. 6.1.b/f) | Email provider | Depends on the email provider | As long as the conversation requires |
 | Analytics | Not implemented | — | — | — | — | — | — |
 

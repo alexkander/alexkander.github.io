@@ -15,15 +15,13 @@ spec:
         app.kubernetes.io/name: personal-website
     spec:
       automountServiceAccountToken: false
-      imagePullSecrets:
-        - name: ghcr-pull
       securityContext:
         runAsNonRoot: true
         seccompProfile:
           type: RuntimeDefault
       containers:
         - name: web
-          image: ghcr.io/alexkander/alexkander.github.io
+          image: forge.home.alexkander.dev/alexkander/alexkander.github.io
           ports:
             - name: http
               containerPort: 8080

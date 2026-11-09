@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { profile } from '../data/profile';
+import { commit, repositoryUrl } from '../lib/build';
 
 interface Props {
   title?: string;
@@ -47,6 +48,13 @@ const nav = [
       <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
       <a href="/rss.xml">RSS</a>
       <a href="/privacy/">Privacy</a>
+      {
+        commit && (
+          <a class="commit" href={`${repositoryUrl}/commit/${commit}`} title="Commit this version was built from">
+            {commit.slice(0, 7)}
+          </a>
+        )
+      }
     </footer>
   </body>
 </html>
@@ -64,9 +72,14 @@ const nav = [
   }
   .site-footer {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     padding-top: 3rem;
     padding-bottom: 2rem;
     font-size: 0.9rem;
+  }
+  .site-footer .commit {
+    margin-left: auto;
+    font-family: ui-monospace, monospace;
   }
 </style>

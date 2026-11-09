@@ -9,6 +9,8 @@ The same static build is published to two targets:
 
 `site` in `astro.config.mjs` is `https://alexkander.dev` for both builds, so canonical URLs, the sitemap, RSS, and Open Graph tags always point to the canonical domain and the mirror does not compete with it in search results. Internal links are root-relative, so the same output works on both hosts.
 
+The footer shows the short hash of the commit each build comes from, linked to it on GitHub (`src/lib/build.ts`: `GITHUB_SHA` in GitHub Actions, the local `HEAD` otherwise), so you can tell which version each target is serving.
+
 ## GitHub Pages
 
 - The repository must be named `alexkander.github.io` (user site served at the root) and be public.

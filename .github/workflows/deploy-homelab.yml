@@ -1,5 +1,5 @@
 # Deploys every push to main to the home lab (docs/deployment.md → Home lab).
-# Skipped until the repository has the FORGE_TOKEN secret.
+# Skipped until the repository has the GARAGE_ACCESS_KEY_ID secret.
 name: Deploy to the home lab
 
 on:
@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   id-token: write
 
 concurrency:
@@ -20,28 +20,32 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      FORGE_TOKEN: ${{ secrets.FORGE_TOKEN }}
+      GARAGE_ACCESS_KEY_ID: ${{ secrets.GARAGE_ACCESS_KEY_ID }}
     steps:
-      - name: Check the forge token
-        if: env.FORGE_TOKEN == ''
-        run: echo "::notice::FORGE_TOKEN is not set; skipping the home lab deploy"
+      - name: Check the bucket key
+        if: env.GARAGE_ACCESS_KEY_ID == ''
+        run: echo "::notice::GARAGE_ACCESS_KEY_ID is not set; skipping the home lab deploy"
       - uses: actions/checkout@v7
-        if: env.FORGE_TOKEN != ''
+        if: env.GARAGE_ACCESS_KEY_ID != ''
+      - uses: pnpm/action-setup@v6
+        if: env.GARAGE_ACCESS_KEY_ID != ''
         with:
-          fetch-depth: 0
+          version: 12
+      - uses: actions/setup-node@v7
+        if: env.GARAGE_ACCESS_KEY_ID != ''
+        with:
+          node-version: 24
+          cache: pnpm
       - name: Join the tailnet
-        if: env.FORGE_TOKEN != ''
+        if: env.GARAGE_ACCESS_KEY_ID != ''
         uses: tailscale/github-action@064b10558093f38325e838ddea35486bdc6b1d5c # v4.4.0
         with:
           oauth-client-id: ${{ vars.TS_OAUTH_CLIENT_ID }}
           audience: ${{ vars.TS_AUDIENCE }}
           tags: tag:ci
-      - name: Log in to the forge
-        if: env.FORGE_TOKEN != ''
-        run: echo "$FORGE_TOKEN" | docker login forge.home.alexkander.dev -u forge-admin --password-stdin
       - name: Deploy
-        if: env.FORGE_TOKEN != ''
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          scripts/deploy-homelab.sh
+        if: env.GARAGE_ACCESS_KEY_ID != ''
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.GARAGE_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.GARAGE_SECRET_ACCESS_KEY }}
+        run: scripts/deploy-s3.sh

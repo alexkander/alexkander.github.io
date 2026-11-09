@@ -12,7 +12,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
-    "deploy:homelab": "scripts/deploy-homelab.sh"
+    "deploy:homelab": "scripts/deploy-s3.sh"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.1.2",

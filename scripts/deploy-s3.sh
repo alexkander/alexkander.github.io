@@ -33,7 +33,10 @@ s3() { aws --endpoint-url "$endpoint" s3 "$@"; }
 
 # Three passes, so a visitor never gets a page whose assets are not there yet:
 # hashed assets first, then the pages, then delete what the build dropped.
-s3 sync dist/_astro "$bucket/_astro" --cache-control "public, max-age=31536000, immutable"
+# (dist/_astro only exists when the build emits hashed assets.)
+if [ -d dist/_astro ]; then
+  s3 sync dist/_astro "$bucket/_astro" --cache-control "public, max-age=31536000, immutable"
+fi
 s3 sync dist "$bucket/" --exclude "_astro/*"
 s3 sync dist "$bucket/" --delete
 

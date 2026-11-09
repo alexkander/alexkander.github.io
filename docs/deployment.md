@@ -27,8 +27,6 @@ The built `dist/` is uploaded to a bucket on the home lab's S3 storage (Garage),
 
 The home lab side (bucket, its key, the web endpoint, ingress route, DNS) lives in the `infrahomelab` repository (`docs/s3.md`).
 
-> **Migration in progress.** The site used to be served by a container (forge image + Flux, from the `production` branch, built from `Dockerfile`, `docker/nginx.conf`, `deploy/`, and `scripts/deploy-homelab.sh`). Flux keeps serving `alexkander.dev` from `production` until the home lab switches the route to the bucket; those files and the branch are removed after that.
-
 ### Deploying
 
 - **Automatic**: `.github/workflows/deploy-homelab.yml` runs the script on every push to `main` that changes more than docs. It joins the tailnet with `tailscale/github-action` (workload identity federation, from the repository variables `TS_OAUTH_CLIENT_ID` and `TS_AUDIENCE`; no Tailscale secret) and uses the bucket key from the repository secrets `GARAGE_ACCESS_KEY_ID` and `GARAGE_SECRET_ACCESS_KEY` (read and write on this bucket only); without them it is skipped.

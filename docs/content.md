@@ -2,7 +2,7 @@
 
 ## Profile data
 
-`src/data/profile.ts` is the single source of truth for personal and professional data (summary, experience, skills, education, talks, interests). It feeds both the home page and the `/cv` page, so update it there and both stay in sync.
+`src/data/profile.ts` is the single source of truth for personal and professional data (summary, experience, skills, education, interests). It feeds both the home page and the `/cv` page, so update it there and both stay in sync.
 
 The profile must not include a location or phone number.
 
@@ -22,7 +22,7 @@ Defined in `src/content.config.ts`. Each entry is a Markdown/MDX file whose file
 
 ## CV
 
-`/cv` renders the profile data as a CV. It is not linked in the main navigation. Its print styles hide the site chrome, so "Save as PDF" (the browser's print dialog) produces the PDF. Automated PDF generation at build time is pending.
+`/cv` renders the profile data as a CV. It is not linked in the main navigation. Its print styles hide the site chrome, so printing the page to PDF from the browser produces the PDF (there is no button for it). Automated PDF generation at build time is pending.
 
 ## Privacy page
 

@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { profile } from '../data/profile';
 import { commit, repositoryUrl } from '../lib/build';
+import Icon from '../components/Icon.astro';
 
 interface Props {
   title?: string;
@@ -9,7 +10,7 @@ interface Props {
 }
 
 const { title, description = profile.tagline } = Astro.props;
-const pageTitle = title ? `${title} · ${profile.shortName}` : `${profile.shortName} · ${profile.title}`;
+const pageTitle = title ? `${title} · ${profile.name}` : `${profile.name} · ${profile.title}`;
 const nav = [
   { href: '/posts/', label: 'Posts' },
   { href: '/projects/', label: 'Projects' },
@@ -22,7 +23,7 @@ const nav = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="alternate" type="application/rss+xml" title={profile.shortName} href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title={profile.name} href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <meta name="generator" content={Astro.generator} />
@@ -36,7 +37,7 @@ const nav = [
   <body>
     <header class="site-header">
       <nav>
-        <a href="/" class="home">{profile.shortName}</a>
+        <a href="/" class="home">{profile.name}</a>
         {nav.map((item) => <a href={item.href}>{item.label}</a>)}
       </nav>
     </header>
@@ -44,9 +45,15 @@ const nav = [
       <slot />
     </main>
     <footer class="site-footer muted">
-      <a href={profile.links.github} target="_blank" rel="noopener noreferrer">GitHub</a>
-      <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      <a href="/rss.xml">RSS</a>
+      <a class="icon" href={profile.links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
+        <Icon name="github" />
+      </a>
+      <a class="icon" href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn">
+        <Icon name="linkedin" />
+      </a>
+      <a class="icon" href="/rss.xml" aria-label="RSS feed" title="RSS feed">
+        <Icon name="rss" />
+      </a>
       <a href="/privacy/">Privacy</a>
       {
         commit && (
@@ -73,10 +80,18 @@ const nav = [
   .site-footer {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 1rem;
     padding-top: 3rem;
     padding-bottom: 2rem;
     font-size: 0.9rem;
+  }
+  .site-footer .icon {
+    display: inline-flex;
+    color: inherit;
+  }
+  .site-footer .icon:hover {
+    color: var(--accent);
   }
   .site-footer .commit {
     margin-left: auto;

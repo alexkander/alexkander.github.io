@@ -6,7 +6,7 @@ import { getPublishedPosts } from '../lib/content';
 export async function GET(context: APIContext) {
   const posts = (await getPublishedPosts()).filter((post) => !post.data.draft);
   return rss({
-    title: profile.shortName,
+    title: profile.name,
     description: profile.tagline,
     site: context.site!,
     items: posts.map((post) => ({

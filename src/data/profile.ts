@@ -13,7 +13,6 @@ export interface Role {
 
 export const profile = {
   name: 'Alexander Rondón',
-  shortName: 'Alex Rondón',
   title: 'Software Engineer',
   tagline: 'Software engineer building scalable backend systems, with a soft spot for home labs, AI, and hardware.',
   summary:
@@ -127,13 +126,6 @@ export const profile = {
   openSource: [
     'Contributions to LoopBack 4, the open-source Node.js API framework.',
     'Small libraries published as npm packages.',
-  ],
-
-  talks: [
-    { title: 'Robotics practice platform with smart mobile devices', event: 'GuayanaLUG — Free Software for Everyone', date: '2013-11' },
-    { title: 'Line-follower robot and robot control with smart mobile devices', event: 'TecnoESIS', date: '2013-07' },
-    { title: 'Robot control with smart mobile devices', event: 'Innovandroid', date: '2013-07' },
-    { title: 'Mobile development with Sencha Touch 2', event: 'Expotech', date: '2013-02' },
   ],
 
   skills: [

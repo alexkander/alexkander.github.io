@@ -1,20 +1,28 @@
 ---
 import Base from '../layouts/Base.astro';
-import { formatMonth, formatRange, profile } from '../data/profile';
+import Icon from '../components/Icon.astro';
+import { formatRange, profile } from '../data/profile';
 ---
 
 <Base title="CV" description={`CV of ${profile.name}, ${profile.title}.`}>
   <article class="cv">
     <header>
-      <h1>{profile.name}</h1>
+      <h1 class="name">{profile.name}</h1>
       <p class="muted">{profile.title}</p>
       <p class="contact">
-        <a href={`mailto:${profile.email}`}>{profile.email}</a>
-        <a href={profile.links.github} target="_blank" rel="noopener noreferrer">github.com/alexkander</a>
-        <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer">linkedin.com/in/arondn2</a>
-        <a href="https://alexkander.dev">alexkander.dev</a>
+        <a href={`mailto:${profile.email}`} aria-label="Email" title={profile.email}>
+          <Icon name="mail" /><span class="label">{profile.email}</span>
+        </a>
+        <a href={profile.links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
+          <Icon name="github" /><span class="label">github.com/alexkander</span>
+        </a>
+        <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn">
+          <Icon name="linkedin" /><span class="label">linkedin.com/in/arondn2</span>
+        </a>
+        <a href="https://alexkander.dev" aria-label="Website" title="alexkander.dev">
+          <Icon name="globe" /><span class="label">alexkander.dev</span>
+        </a>
       </p>
-      <button type="button" class="print" onclick="window.print()">Save as PDF</button>
     </header>
 
     <p>{profile.summary}</p>
@@ -86,19 +94,6 @@ import { formatMonth, formatRange, profile } from '../data/profile';
     </section>
 
     <section>
-      <h2>Talks</h2>
-      <ul>
-        {
-          profile.talks.map((t) => (
-            <li>
-              {t.title} · {t.event} <span class="muted">· {formatMonth(t.date)}</span>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
-
-    <section>
       <h2>Interests</h2>
       <p>{profile.interests.join(' · ')}</p>
     </section>
@@ -119,7 +114,15 @@ import { formatMonth, formatRange, profile } from '../data/profile';
   .contact {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 0 1rem;
+  }
+  .contact a {
+    display: inline-flex;
+    color: inherit;
+  }
+  .contact a:hover {
+    color: var(--accent);
   }
   dl {
     display: grid;
@@ -132,20 +135,19 @@ import { formatMonth, formatRange, profile } from '../data/profile';
   dd {
     margin: 0;
   }
-  .print {
-    font: inherit;
-    padding: 0.3rem 0.8rem;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    background: transparent;
-    color: var(--fg);
-    cursor: pointer;
+  /* The site header already shows the name on screen; print hides it, so the PDF keeps this one. */
+  /* Contact links are icons on screen, and spelled out in the PDF. */
+  @media screen {
+    .name,
+    .contact .label {
+      display: none;
+    }
   }
 
   @media print {
     :global(.site-header),
     :global(.site-footer),
-    .print {
+    .contact :global(.icon) {
       display: none;
     }
     :global(body) {

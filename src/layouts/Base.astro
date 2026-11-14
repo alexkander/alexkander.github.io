@@ -3,6 +3,7 @@ import '../styles/global.css';
 import { profile } from '../data/profile';
 import { commit, repositoryUrl } from '../lib/build';
 import Icon from '../components/Icon.astro';
+import Analytics from '../components/Analytics.astro';
 
 interface Props {
   title?: string;
@@ -32,6 +33,7 @@ const nav = [
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+    {import.meta.env.PROD && <Analytics />}
     <slot name="head" />
   </head>
   <body>

@@ -3,7 +3,7 @@
 import Base from '../layouts/Base.astro';
 import { profile } from '../data/profile';
 
-const lastUpdated = 'November 5, 2026';
+const lastUpdated = 'November 14, 2026';
 ---
 
 <Base title="Privacy" description="How this site handles your personal data.">
@@ -12,9 +12,9 @@ const lastUpdated = 'November 5, 2026';
     <p class="muted">Last updated: {lastUpdated}</p>
 
     <p>
-      This site is a personal website. It does not use cookies, does not store anything on your device, does not run
-      analytics, and does not load resources from third-party services. This page explains the little data that is
-      still processed when you visit it.
+      This site is a personal website. It does not use cookies, does not store anything on your device, and does not
+      load resources from third-party services. It measures traffic with a privacy-friendly analytics tool that I host
+      myself. This page explains the little data that is processed when you visit it.
     </p>
 
     <h2>Who is responsible</h2>
@@ -44,6 +44,39 @@ const lastUpdated = 'November 5, 2026';
       operating a functional and secure website (Article 6(1)(f) GDPR).
     </p>
 
+    <h3>Analytics</h3>
+    <p>
+      On alexkander.dev, I use <a href="https://umami.is/">Umami</a>, an open-source analytics tool, to understand how
+      the site is used: which pages are read, where visitors come from (the referring site), and when and from which
+      region they visit. It runs on my own server at stats.alexkander.dev; the data is not shared with anyone, not
+      used for advertising, and not combined with other sources. The alexkander.github.io mirror is not measured.
+    </p>
+    <p>For each visit, it records:</p>
+    <ul>
+      <li>the pages you view, the referring site, and links you follow to other sites (only their domain);</li>
+      <li>your country, region, and city, derived from your IP address;</li>
+      <li>your browser, operating system, device type, screen size, and language.</li>
+    </ul>
+    <p>
+      Your IP address is used only at the moment of the visit, to derive your approximate location and an anonymous
+      visit identifier that changes every month. It is never stored. No cookies are set and nothing is written to your
+      device, so you cannot be recognized across months or across other sites.
+    </p>
+    <p>
+      The legal basis is my legitimate interest in knowing how the site is used in order to improve it (Article 6(1)(f)
+      GDPR). Data is kept for a maximum of 24 months and then deleted automatically; deleted data may remain in
+      backups for up to 6 more months.
+    </p>
+    <p>
+      You can object at any time: analytics does not load if your browser sends a Do Not Track or Global Privacy
+      Control signal, or if you opt out here. Opting out stores a single flag in this browser so the choice is
+      remembered.
+    </p>
+    <p class="opt-out">
+      <button type="button" id="analytics-opt-out">Opt out of analytics</button>
+      <span id="analytics-status" class="muted" aria-live="polite"></span>
+    </p>
+
     <h3>When you email me</h3>
     <p>
       If you write to me, I receive your email address, your name if you include it, and your message. I use them only
@@ -53,8 +86,9 @@ const lastUpdated = 'November 5, 2026';
 
     <h2>Cookies and analytics</h2>
     <p>
-      This site does not set cookies or use any other form of storage on your device, and it does not use analytics or
-      tracking tools. If that changes, this page will be updated before it does.
+      This site does not set cookies. It stores something on your device only when you ask it to: the analytics opt-out
+      flag above. Analytics never uses cookies or device storage, and the site uses no other tracking tools. If that
+      changes, this page will be updated before it does.
     </p>
 
     <h2>International transfers</h2>
@@ -78,3 +112,34 @@ const lastUpdated = 'November 5, 2026';
     </p>
   </article>
 </Base>
+
+<script is:inline>
+  (() => {
+    const button = document.getElementById('analytics-opt-out');
+    const status = document.getElementById('analytics-status');
+    const key = 'umami.disabled';
+    const read = () => {
+      try {
+        return localStorage.getItem(key) === '1';
+      } catch {
+        return false;
+      }
+    };
+    const render = () => {
+      const optedOut = read();
+      button.textContent = optedOut ? 'Opt back in to analytics' : 'Opt out of analytics';
+      status.textContent = optedOut ? 'You have opted out of analytics in this browser.' : '';
+    };
+    button.addEventListener('click', () => {
+      try {
+        if (read()) localStorage.removeItem(key);
+        else localStorage.setItem(key, '1');
+      } catch {
+        status.textContent = 'Your browser blocks storage, so this choice cannot be saved.';
+        return;
+      }
+      render();
+    });
+    render();
+  })();
+</script>

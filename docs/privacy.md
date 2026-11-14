@@ -27,8 +27,8 @@ Professional obligations toward employers and clients (NDAs, intellectual proper
 
 These rules keep the site out of consent-banner territory and minimize the data processed. Breaking any of them requires updating this document and the `/privacy` page first.
 
-1. **No cookies or device storage** (`localStorage`, `sessionStorage`, IndexedDB) except strictly necessary ones. A stored UI preference explicitly set by the visitor (e.g. a theme toggle) is acceptable; anything used for tracking or measurement is not.
-2. **No third-party requests by default.** Fonts, scripts, styles, and images are self-hosted and served from the same origin. Adding a third-party request (CDN, embed, widget, font service) requires a review against this document, because it sends the visitor's IP address to that third party.
+1. **No cookies or device storage** (`localStorage`, `sessionStorage`, IndexedDB) except strictly necessary ones. A stored preference explicitly set by the visitor (e.g. a theme toggle, or the analytics opt-out flag) is acceptable; anything used for tracking or measurement is not.
+2. **No third-party requests by default.** Fonts, scripts, styles, and images are self-hosted and served from the same origin. The only exception is the self-hosted analytics at `stats.alexkander.dev`: a subdomain run by the operator on the home lab, not a third party. Adding a third-party request (CDN, embed, widget, font service) requires a review against this document, because it sends the visitor's IP address to that third party.
 3. **Embeds are click-to-load.** Videos, social posts, maps, and similar embeds load only after the visitor clicks, and use privacy-enhanced modes where available (e.g. `youtube-nocookie.com`).
 4. **Analytics must be cookieless, aggregated, and self-hosted** (see [Analytics](#analytics)), loaded only in production builds.
 5. **No personal data in URLs**, query strings, or analytics events.
@@ -44,7 +44,7 @@ This table is the record of processing activities (GDPR art. 30). Every feature 
 | Hosting on GitHub Pages (`alexkander.github.io`) | Active | IP address, user agent, requested URL (server logs) | Serve the site, security | Legitimate interest (art. 6.1.f) | GitHub, Inc. | United States, under the EU-US Data Privacy Framework | Per GitHub's privacy statement |
 | Hosting on the home lab (`alexkander.dev`) via Cloudflare | Active | IP address, user agent, requested URL | Serve the site, security, caching | Legitimate interest (art. 6.1.f) | Cloudflare, Inc. (processor) | United States, under the EU-US Data Privacy Framework | Home lab server logs: max. 14 days (the web server that serves the site logs no requests or IPs; the ingress's raw access log is rotated daily with 14 kept, and its copy in Loki has no IPs and is kept 14 days). Cloudflare: per its policy |
 | Email contact | Active | Name, email address, message content | Reply to the visitor | Visitor's request / legitimate interest (art. 6.1.b/f) | Email provider | Depends on the email provider | As long as the conversation requires |
-| Analytics | Not implemented | — | — | — | — | — | — |
+| Analytics (Umami, self-hosted at `stats.alexkander.dev`, `alexkander.dev` only) | Active | Pages viewed, referrer, outbound link domains, country/region/city (GeoLite2 lookup in the instance), browser, OS, device, screen, language, and a session hash (website + IP + user agent + monthly rotating salt). The IP is used in memory only and never stored. No cookies or device storage | Understand how the site is used | Legitimate interest (art. 6.1.f); objection via DNT, GPC, or the opt-out on `/privacy` | Cloudflare, Inc. (processor, tunnel/proxy, as for hosting); everything else is self-hosted | Only through Cloudflare, under the EU-US Data Privacy Framework | 24 months, deleted by a nightly job; deleted rows remain in backups up to ~6 months. The `stats.alexkander.dev` access log follows the home lab hosting row (max. 14 days, no IPs in Loki) |
 
 ## Feature checklist
 
@@ -63,10 +63,12 @@ Before merging any feature that collects, stores, or transmits personal data (or
 
 ### Analytics
 
-- Use a cookieless, self-hosted tool (planned: Umami on the home lab k3s cluster) that does not store raw IP addresses and only reports aggregated data.
+- Use a cookieless, self-hosted tool that does not store raw IP addresses and only reports aggregated data. Implemented with Umami on the home lab k3s cluster (deployment in the `infrahomelab` repository), loaded by `src/components/Analytics.astro` in production builds and only on the canonical host.
 - Lawful basis: legitimate interest, which requires documenting it in the `/privacy` page and offering a way to object.
 - Retention: 24 months maximum for aggregated data.
-- Respect `Do Not Track` and Global Privacy Control signals.
+- Respect `Do Not Track` and Global Privacy Control signals: the tracker is not loaded at all when either is set, or when the visitor opted out on `/privacy` (the `umami.disabled` flag in `localStorage`, which the Umami tracker also checks).
+- Outbound link clicks record only the destination domain.
+- The collect endpoint (`POST /api/send`) only accepts browser requests whose `Origin` is in an allowlist kept in the `infrahomelab` repository (currently `https://alexkander.dev`); measuring another site means adding its origin there. This stops other sites' pages from sending events, not scripted clients, which can forge `Origin`.
 - No cross-site tracking, no fingerprinting, no advertising features, and no sharing with third parties.
 - Any analytics tool that uses cookies or device storage requires a consent banner and must not load before consent.
 

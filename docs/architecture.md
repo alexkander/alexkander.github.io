@@ -20,6 +20,10 @@ Profile data (experience, skills, etc.) lives in `src/data/profile.ts` instead o
 
 Publishing a post means adding an `.mdx` file to its collection and pushing. A git-based CMS (Keystatic or Decap) may be added later without changing the storage model.
 
+## Analytics
+
+Traffic is measured with self-hosted, cookieless Umami (`src/components/Analytics.astro`), only in production builds and only on `alexkander.dev`. Requirements are in [Privacy](privacy.md#analytics).
+
 ## Planned features
 
 - RSS feed, sitemap, tags.

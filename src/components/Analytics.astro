@@ -1,0 +1,35 @@
+---
+// Self-hosted, cookieless Umami analytics (see docs/privacy.md, "Analytics").
+// Rendered only in production builds. The loader runs on the canonical host only, and loads nothing when the
+// visitor sends Do Not Track or Global Privacy Control, or has opted out on the /privacy page.
+const scriptUrl = 'https://stats.alexkander.dev/script.js';
+const websiteId = '0d3d1bf2-6642-4b25-8d90-dc4dc62855b8';
+const host = 'alexkander.dev';
+---
+
+<script is:inline define:vars={{ scriptUrl, websiteId, host }}>
+  (() => {
+    if (location.hostname !== host) return;
+    if (navigator.globalPrivacyControl || navigator.doNotTrack === '1' || window.doNotTrack === '1') return;
+    try {
+      if (localStorage.getItem('umami.disabled')) return;
+    } catch {}
+
+    const script = document.createElement('script');
+    script.defer = true;
+    script.src = scriptUrl;
+    script.dataset.websiteId = websiteId;
+    script.dataset.domains = host;
+    script.dataset.doNotTrack = 'true';
+    document.head.appendChild(script);
+
+    // Count clicks on links to other sites; only the destination host is recorded.
+    document.addEventListener('click', (event) => {
+      const link = event.target instanceof Element ? event.target.closest('a[href]') : null;
+      if (!link || !window.umami) return;
+      const url = new URL(link.href, location.href);
+      if (!url.protocol.startsWith('http') || url.hostname === location.hostname) return;
+      window.umami.track('outbound-link', { host: url.hostname });
+    });
+  })();
+</script>

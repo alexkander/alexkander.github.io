@@ -59,7 +59,13 @@ const nav = [
       <a href="/privacy/">Privacy</a>
       {
         commit && (
-          <a class="commit" href={`${repositoryUrl}/commit/${commit}`} title="Commit this version was built from">
+          <a
+            class="commit"
+            href={`${repositoryUrl}/commit/${commit}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Commit this version was built from"
+          >
             {commit.slice(0, 7)}
           </a>
         )

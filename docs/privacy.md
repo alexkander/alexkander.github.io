@@ -68,6 +68,7 @@ Before merging any feature that collects, stores, or transmits personal data (or
 - Retention: 24 months maximum for aggregated data.
 - Respect `Do Not Track` and Global Privacy Control signals: the tracker is not loaded at all when either is set, or when the visitor opted out on `/privacy` (the `umami.disabled` flag in `localStorage`, which the Umami tracker also checks).
 - Outbound link clicks record only the destination domain.
+- Location is stored down to the city (Umami's default), as a deliberate decision under data minimization: it is derived from the IP at the moment of the visit, the IP is never stored, and without cookies or IPs a city alone does not identify a visitor. It also shows where interest in the site comes from. Keep the `/privacy` page listing it; if the city stops being useful, drop it and update both documents.
 - The collect endpoint (`POST /api/send`) only accepts browser requests whose `Origin` is in an allowlist kept in the `infrahomelab` repository (currently `https://alexkander.dev`); measuring another site means adding its origin there. This stops other sites' pages from sending events, not scripted clients, which can forge `Origin`.
 - No cross-site tracking, no fingerprinting, no advertising features, and no sharing with third parties.
 - Any analytics tool that uses cookies or device storage requires a consent banner and must not load before consent.

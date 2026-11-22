@@ -1,0 +1,47 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { profile } from '../../data/profile';
+import { formatDate, getPublishedPosts, postLicense } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Base title={post.data.title} description={post.data.description}>
+  <article>
+    <h1>{post.data.title}</h1>
+    <p class="muted">
+      <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+      {post.data.updated && <> · updated {formatDate(post.data.updated)}</>}
+    </p>
+    {
+      post.data.tags.length > 0 && (
+        <ul class="tags muted">
+          {post.data.tags.map((tag) => <li>#{tag}</li>)}
+        </ul>
+      )
+    }
+    <Content />
+    <footer class="license muted">
+      <p>
+        © {post.data.date.getUTCFullYear()} {profile.name}. Licensed under
+        <a href={postLicense.url} rel="license">{postLicense.name}</a>: you may share and adapt it with attribution.
+      </p>
+    </footer>
+  </article>
+</Base>
+
+<style>
+  .license {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+</style>

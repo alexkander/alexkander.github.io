@@ -1,0 +1,23 @@
+---
+import Base from '../../layouts/Base.astro';
+import WorkList from '../../components/WorkList.astro';
+import { getWork } from '../../lib/content';
+
+const projects = await getWork('projects');
+const active = projects.filter((p) => p.data.status === 'active');
+const archived = projects.filter((p) => p.data.status === 'archived');
+---
+
+<Base title="Projects" description="Projects I have built or am working on.">
+  <h1>Projects</h1>
+  {active.length > 0 && <WorkList entries={active} base="/projects/" />}
+  {
+    archived.length > 0 && (
+      <section>
+        <h2>Archive</h2>
+        <WorkList entries={archived} base="/projects/" />
+      </section>
+    )
+  }
+  {projects.length === 0 && <p class="muted">Nothing here yet.</p>}
+</Base>

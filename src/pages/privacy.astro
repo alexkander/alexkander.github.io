@@ -1,0 +1,155 @@
+---
+// Public summary of docs/privacy.md; update both together.
+import Base from '../layouts/Base.astro';
+import { profile } from '../data/profile';
+
+const lastUpdated = 'November 21, 2026';
+---
+
+<Base title="Privacy" description="How this site handles your personal data.">
+  <article>
+    <h1>Privacy policy</h1>
+    <p class="muted">Last updated: {lastUpdated}</p>
+
+    <p>
+      This site is a personal, non-commercial website. It does not use cookies, stores nothing on your device unless you
+      ask it to, and does not load resources from third-party services. It measures traffic with a privacy-friendly analytics tool that I host
+      myself. This page explains the little data that is processed when you visit it.
+    </p>
+
+    <h2>Who is responsible</h2>
+    <p>
+      {profile.name}, reachable at <a href={`mailto:${profile.email}`}>{profile.email}</a>, is the data controller for this
+      site.
+    </p>
+
+    <h2>What data is processed</h2>
+    <h3>When you visit the site</h3>
+    <p>
+      Like any website, the servers that deliver these pages receive your IP address, browser user agent, and the page
+      you request. This happens through the hosting providers:
+    </p>
+    <ul>
+      <li>
+        <strong>alexkander.github.io</strong> is hosted by GitHub, Inc., which may keep server logs for security purposes.
+        See the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub Privacy Statement</a>.
+      </li>
+      <li>
+        <strong>alexkander.dev</strong> is self-hosted and delivered through Cloudflare, Inc. My own server logs are kept
+        for a maximum of 14 days. See the <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare Privacy Policy</a>.
+      </li>
+    </ul>
+    <p>
+      This data is used only to deliver the site and keep it secure. The legal basis is my legitimate interest in
+      operating a functional and secure website (Article 6(1)(f) GDPR).
+    </p>
+
+    <h3>Analytics</h3>
+    <p>
+      On alexkander.dev, I use <a href="https://umami.is/">Umami</a>, an open-source analytics tool, to understand how
+      the site is used: which pages are read, where visitors come from (the referring site), and when and from which
+      region they visit. It runs on my own server at stats.alexkander.dev; the data is not shared with anyone, not
+      used for advertising, and not combined with other sources. The alexkander.github.io mirror is not measured.
+    </p>
+    <p>For each visit, it records:</p>
+    <ul>
+      <li>the pages you view, the referring site, and links you follow to other sites (only their domain);</li>
+      <li>your country, region, and city, derived from your IP address;</li>
+      <li>your browser, operating system, device type, screen size, and language.</li>
+    </ul>
+    <p>
+      Your IP address is used only at the moment of the visit, to derive your approximate location and an anonymous
+      visit identifier that changes every month. It is never stored. No cookies are set and nothing is written to your
+      device, so you cannot be recognized across months or across other sites. The location lookup uses GeoLite data
+      created by MaxMind, available from <a href="https://www.maxmind.com">https://www.maxmind.com</a>.
+    </p>
+    <p>
+      The legal basis is my legitimate interest in knowing how the site is used in order to improve it (Article 6(1)(f)
+      GDPR). Data is kept for a maximum of 24 months and then deleted automatically; deleted data may remain in
+      backups for up to 6 more months.
+    </p>
+    <p>
+      You can object at any time: analytics does not load if your browser sends a Do Not Track or Global Privacy
+      Control signal, or if you opt out here. Opting out stores a single flag in this browser so the choice is
+      remembered.
+    </p>
+    <p class="opt-out">
+      <button type="button" id="analytics-opt-out">Opt out of analytics</button>
+      <span id="analytics-status" class="muted" aria-live="polite"></span>
+    </p>
+
+    <h3>When you email me</h3>
+    <p>
+      If you write to me, I receive your email address, your name if you include it, and your message. I use them only
+      to reply, based on your request (Article 6(1)(b) and (f) GDPR), and keep them only as long as the conversation
+      requires.
+    </p>
+
+    <h3>Tools and demos</h3>
+    <p>
+      Some free tools and demos that accompany posts are published under this domain, at alexkander.dev/&lt;name&gt;/
+      (for example <a href="/eclipse-weather/">eclipse-weather</a>). Each one has its own privacy notice, linked from the
+      tool, which describes the data it processes, the services it contacts, and what it stores in your browser. They
+      share this site's browser storage: opting out of analytics here also applies to them, and clearing this site's
+      data in your browser also deletes theirs.
+    </p>
+
+    <h2>Cookies and analytics</h2>
+    <p>
+      This site does not set cookies. It stores something on your device only when you ask it to: the analytics opt-out
+      flag above. The tools and demos described above may store their own data, as their privacy notices explain. Analytics never uses cookies or device storage, and the site uses no other tracking tools. If that
+      changes, this page will be updated before it does.
+    </p>
+
+    <h2>International transfers</h2>
+    <p>
+      GitHub and Cloudflare are based in the United States. Transfers of your data to them rely on the EU-US Data
+      Privacy Framework, under which both companies are certified.
+    </p>
+
+    <h2>Your rights</h2>
+    <p>
+      You can ask to access, correct, or delete your personal data, restrict or object to its processing, or receive it
+      in a portable format. Email <a href={`mailto:${profile.email}`}>{profile.email}</a> and I will reply within one
+      month. You also have the right to lodge a complaint with a data protection supervisory authority, in particular in
+      the country where you live or work.
+    </p>
+
+    <h2>Changes</h2>
+    <p>
+      This policy is updated whenever the site starts processing data in a new way. The date at the top shows the latest
+      version.
+    </p>
+  </article>
+</Base>
+
+<script is:inline>
+  (() => {
+    const button = document.getElementById('analytics-opt-out');
+    const status = document.getElementById('analytics-status');
+    const key = 'umami.disabled';
+    const read = () => {
+      try {
+        return localStorage.getItem(key) === '1';
+      } catch {
+        return false;
+      }
+    };
+    const render = () => {
+      const optedOut = read();
+      button.textContent = optedOut ? 'Opt back in to analytics' : 'Opt out of analytics';
+      status.textContent = optedOut ? 'You have opted out of analytics in this browser.' : '';
+    };
+    button.addEventListener('click', () => {
+      try {
+        if (read()) localStorage.removeItem(key);
+        else localStorage.setItem(key, '1');
+      } catch {
+        status.textContent = 'Your browser blocks storage, so this choice cannot be saved.';
+        return;
+      }
+      render();
+    });
+    render();
+  })();
+</script>

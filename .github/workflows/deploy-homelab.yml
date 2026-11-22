@@ -1,0 +1,52 @@
+# Deploys every push to main to the self-hosted target (docs/deployment.md → Self-hosted).
+# Skipped until the repository has the GARAGE_ACCESS_KEY_ID secret.
+name: Deploy to the self-hosted target
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['docs/**', '*.md']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: deploy-homelab
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      GARAGE_ACCESS_KEY_ID: ${{ secrets.GARAGE_ACCESS_KEY_ID }}
+    steps:
+      - name: Check the bucket key
+        if: env.GARAGE_ACCESS_KEY_ID == ''
+        run: echo "::notice::GARAGE_ACCESS_KEY_ID is not set; skipping the deploy"
+      - uses: actions/checkout@v7
+        if: env.GARAGE_ACCESS_KEY_ID != ''
+      - uses: pnpm/action-setup@v6
+        if: env.GARAGE_ACCESS_KEY_ID != ''
+        with:
+          version: 12
+      - uses: actions/setup-node@v7
+        if: env.GARAGE_ACCESS_KEY_ID != ''
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Connect
+        if: env.GARAGE_ACCESS_KEY_ID != ''
+        uses: tailscale/github-action@064b10558093f38325e838ddea35486bdc6b1d5c # v4.4.0
+        with:
+          oauth-client-id: ${{ vars.TS_OAUTH_CLIENT_ID }}
+          audience: ${{ vars.TS_AUDIENCE }}
+          tags: tag:ci
+      - name: Deploy
+        if: env.GARAGE_ACCESS_KEY_ID != ''
+        env:
+          AWS_ENDPOINT_URL: ${{ secrets.S3_ENDPOINT_URL }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.GARAGE_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.GARAGE_SECRET_ACCESS_KEY }}
+        run: scripts/deploy-s3.sh

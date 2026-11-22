@@ -1,0 +1,120 @@
+---
+import '../styles/global.css';
+import { profile } from '../data/profile';
+import { commit, repositoryUrl } from '../lib/build';
+import Icon from '../components/Icon.astro';
+import Analytics from '../components/Analytics.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = profile.tagline } = Astro.props;
+const pageTitle = title ? `${title} · ${profile.name}` : `${profile.name} · ${profile.title}`;
+const path = Astro.url.pathname;
+const nav = [
+  { href: '/posts/', label: 'Posts' },
+  { href: '/projects/', label: 'Projects' },
+  // Add { href: '/products/', label: 'Products' } once the first product exists.
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title={profile.name} href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+    {import.meta.env.PROD && <Analytics />}
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <nav aria-label="Main">
+        <a href="/" class="home" aria-current={path === '/' ? 'page' : undefined}>{profile.name}</a>
+        {
+          nav.map((item) => (
+            <a href={item.href} aria-current={path.startsWith(item.href) ? (path === item.href ? 'page' : 'true') : undefined}>
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+    </header>
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <footer class="site-footer muted">
+      <a class="icon" href={profile.links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
+        <Icon name="github" />
+      </a>
+      <a class="icon" href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn">
+        <Icon name="linkedin" />
+      </a>
+      <a class="icon" href="/rss.xml" aria-label="RSS feed" title="RSS feed">
+        <Icon name="rss" />
+      </a>
+      <a href="/privacy/">Privacy</a>
+      {
+        commit && (
+          <a
+            class="commit"
+            href={`${repositoryUrl}/commit/${commit}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Commit this version was built from"
+          >
+            {commit.slice(0, 7)}
+          </a>
+        )
+      }
+    </footer>
+  </body>
+</html>
+
+<style>
+  .site-header nav {
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem 0;
+  }
+  .site-header .home {
+    margin-right: auto;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+    font-size: 0.9rem;
+  }
+  .site-footer .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    min-height: 1.5rem;
+    color: inherit;
+  }
+  .site-footer .icon:hover {
+    color: var(--accent);
+  }
+  .site-footer .commit {
+    margin-left: auto;
+    font-family: ui-monospace, monospace;
+  }
+</style>

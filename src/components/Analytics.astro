@@ -15,12 +15,23 @@ const host = 'alexkander.dev';
       if (localStorage.getItem('umami.disabled')) return;
     } catch {}
 
+    // Drop what is not needed to measure the audience. The empty `os` stops the server from deriving it from the user
+    // agent.
+    window.umamiBeforeSend = (type, { language, ...payload }) => ({
+      ...payload,
+      os: '',
+      referrer: (payload.referrer || '').split(/[?#]/)[0],
+    });
+
     const script = document.createElement('script');
     script.defer = true;
     script.src = scriptUrl;
     script.dataset.websiteId = websiteId;
     script.dataset.domains = host;
     script.dataset.doNotTrack = 'true';
+    script.dataset.beforeSend = 'umamiBeforeSend';
+    script.dataset.excludeSearch = 'true';
+    script.dataset.excludeHash = 'true';
     document.head.appendChild(script);
 
     // Count clicks on links to other sites; only the destination host is recorded.

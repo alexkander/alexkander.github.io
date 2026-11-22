@@ -27,6 +27,15 @@ These paths are served by demos from other repositories (see [Privacy](privacy.m
 
 - `/eclipse-weather/`
 
+When a path is added here, add it to `demoPaths` in `src/lib/links.ts` too (see [Links](#links)).
+
+## Links
+
+Links that leave the pages of this repository open in a new tab (`target="_blank"`): other sites, and the demos under the same domain (see [Reserved paths](#reserved-paths)). Links to the site's own pages, feeds, anchors, and `mailto:` open in the same tab.
+
+- In `.astro` files, use `src/components/Link.astro` for any link that leaves the site or whose destination comes from data. It sets `target`, `rel`, and the notice for screen readers; do not write them by hand.
+- In content, write normal Markdown links in `.mdx` files: they go through the same component. It does not apply to `.md` files or to a raw `<a>`, so use neither for these links.
+
 ## License
 
 Posts are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/): anyone may share and adapt them, including commercially, as long as they credit the author. This covers the text and the code snippets in each post.

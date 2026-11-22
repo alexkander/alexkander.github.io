@@ -1,6 +1,7 @@
 ---
 // Public summary of docs/privacy.md; update both together.
 import Base from '../layouts/Base.astro';
+import Link from '../components/Link.astro';
 import { profile } from '../data/profile';
 
 const lastUpdated = 'November 22, 2026';
@@ -32,11 +33,11 @@ const lastUpdated = 'November 22, 2026';
     <ul>
       <li>
         <strong>alexkander.github.io</strong> is hosted by GitHub, Inc., which may keep server logs for security purposes.
-        See the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub Privacy Statement</a>.
+        See the <Link href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub Privacy Statement</Link>.
       </li>
       <li>
         <strong>alexkander.dev</strong> is self-hosted and delivered through Cloudflare, Inc. My own server logs are kept
-        for a maximum of 14 days. See the <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare Privacy Policy</a>.
+        for a maximum of 14 days. See the <Link href="https://www.cloudflare.com/privacypolicy/">Cloudflare Privacy Policy</Link>.
       </li>
     </ul>
     <p>
@@ -46,7 +47,7 @@ const lastUpdated = 'November 22, 2026';
 
     <h3>Analytics</h3>
     <p>
-      On alexkander.dev, I use <a href="https://umami.is/">Umami</a>, an open-source analytics tool, to understand how
+      On alexkander.dev, I use <Link href="https://umami.is/">Umami</Link>, an open-source analytics tool, to understand how
       the site is used: which pages are read, where visitors come from (the referring site), and when and from which
       region they visit. It runs on my own server at stats.alexkander.dev; the data is not shared with anyone, not
       used for advertising, and not combined with other sources. The alexkander.github.io mirror is not measured.
@@ -62,7 +63,7 @@ const lastUpdated = 'November 22, 2026';
       identifier that changes every day and is different on every site. Your IP address is never stored. No cookies are
       set and nothing is written to your device, and the identifier is not used to find out who you are. The parameters
       in the address of a page are not recorded. The location lookup uses GeoLite data created by MaxMind, available
-      from <a href="https://www.maxmind.com">https://www.maxmind.com</a>.
+      from <Link href="https://www.maxmind.com">https://www.maxmind.com</Link>.
     </p>
     <p>
       The legal basis is my legitimate interest in knowing how the site is used in order to improve it (Article 6(1)(f)
@@ -89,7 +90,7 @@ const lastUpdated = 'November 22, 2026';
     <h3>Tools and demos</h3>
     <p>
       Some free tools and demos that accompany posts are published under this domain, at alexkander.dev/&lt;name&gt;/
-      (for example <a href="/eclipse-weather/">eclipse-weather</a>). Each one has its own privacy notice, linked from the
+      (for example <Link href="/eclipse-weather/">eclipse-weather</Link>). Each one has its own privacy notice, linked from the
       tool, which describes the data it processes, the services it contacts, and what it stores in your browser. They
       share this site's browser storage: opting out of analytics here also applies to them, and clearing this site's
       data in your browser also deletes theirs.

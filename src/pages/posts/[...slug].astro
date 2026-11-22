@@ -1,6 +1,7 @@
 ---
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Link from '../../components/Link.astro';
 import { profile } from '../../data/profile';
 import { formatDate, getPublishedPosts, postLicense } from '../../lib/content';
 
@@ -27,11 +28,11 @@ const { Content } = await render(post);
         </ul>
       )
     }
-    <Content />
+    <Content components={{ a: Link }} />
     <footer class="license muted">
       <p>
         © {post.data.date.getUTCFullYear()} {profile.name}. Licensed under
-        <a href={postLicense.url} rel="license">{postLicense.name}</a>: you may share and adapt it with attribution.
+        <Link href={postLicense.url} rel="license">{postLicense.name}</Link>: you may share and adapt it with attribution.
       </p>
     </footer>
   </article>

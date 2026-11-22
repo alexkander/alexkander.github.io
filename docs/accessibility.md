@@ -50,6 +50,7 @@ The site follows WCAG 2.2 AA voluntarily, so it stays accessible and needs no re
 
 ### Content
 
+- Links that open in a new tab say so to screen readers with "(opens in a new tab)"; `src/components/Link.astro` adds it (see [Content](content.md#links)).
 - Link text describes the destination ("Read the privacy policy", not "click here").
 - Posts use real headings, lists, and tables, not formatting that only looks like them.
 - Code blocks scroll horizontally instead of overflowing, and their highlighting colors meet the contrast rules.

@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import { render } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import Link from './Link.astro';
 import { formatYears } from '../lib/content';
 
 interface Props {
@@ -23,10 +24,10 @@ const { Content } = await render(entry);
       {data.client && (<><dt>Client</dt><dd>{data.client}</dd></>)}
       {data.platforms.length > 0 && (<><dt>Platforms</dt><dd>{data.platforms.join(', ')}</dd></>)}
       {data.stack.length > 0 && (<><dt>Stack</dt><dd>{data.stack.join(', ')}</dd></>)}
-      {data.url && (<><dt>Website</dt><dd><a href={data.url}>{data.url}</a></dd></>)}
-      {data.repo && (<><dt>Source</dt><dd><a href={data.repo}>{data.repo}</a></dd></>)}
+      {data.url && (<><dt>Website</dt><dd><Link href={data.url}>{data.url}</Link></dd></>)}
+      {data.repo && (<><dt>Source</dt><dd><Link href={data.repo}>{data.repo}</Link></dd></>)}
     </dl>
-    <Content />
+    <Content components={{ a: Link }} />
   </article>
 </Base>
 

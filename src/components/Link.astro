@@ -1,0 +1,19 @@
+---
+// A link that opens in a new tab when it leaves this site, and tells screen readers so (docs/content.md → Links).
+import type { HTMLAttributes } from 'astro/types';
+import { leavingLink } from '../lib/links';
+
+type Props = Omit<HTMLAttributes<'a'>, 'href' | 'target'> & { href: string };
+
+const { href, rel, 'aria-label': label, ...rest } = Astro.props;
+const leaving = leavingLink(href, Astro.site!);
+const hint = '(opens in a new tab)';
+---
+
+<a
+  href={href}
+  target={leaving?.target}
+  rel={[rel, leaving?.rel].filter(Boolean).join(' ') || undefined}
+  aria-label={label && leaving ? `${label} ${hint}` : label}
+  {...rest}
+><slot />{leaving && !label && <span class="visually-hidden"> {hint}</span>}</a>

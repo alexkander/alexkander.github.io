@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import Link from '../components/Link.astro';
 import { formatRange, profile } from '../data/profile';
 ---
 
@@ -13,12 +14,12 @@ import { formatRange, profile } from '../data/profile';
         <a href={`mailto:${profile.email}`} aria-label="Email" title={profile.email}>
           <Icon name="mail" /><span class="label">{profile.email}</span>
         </a>
-        <a href={profile.links.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
+        <Link href={profile.links.github} aria-label="GitHub" title="GitHub">
           <Icon name="github" /><span class="label">github.com/alexkander</span>
-        </a>
-        <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn">
+        </Link>
+        <Link href={profile.links.linkedin} aria-label="LinkedIn" title="LinkedIn">
           <Icon name="linkedin" /><span class="label">linkedin.com/in/arondn2</span>
-        </a>
+        </Link>
         <a href="https://alexkander.dev" aria-label="Website" title="alexkander.dev">
           <Icon name="globe" /><span class="label">alexkander.dev</span>
         </a>

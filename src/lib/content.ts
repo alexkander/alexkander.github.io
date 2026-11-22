@@ -1,9 +1,10 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
-/** License of every post (docs/content.md → License). */
-export const postLicense = {
-  name: 'CC BY 4.0',
-  url: 'https://creativecommons.org/licenses/by/4.0/',
+/** Licenses of the published content (docs/content.md → License). */
+export const licenses = {
+  text: { name: 'CC BY-NC 4.0', url: 'https://creativecommons.org/licenses/by-nc/4.0/' },
+  code: { name: 'MIT', url: 'https://opensource.org/license/mit' },
+  photos: { name: 'CC BY-NC-ND 4.0', url: 'https://creativecommons.org/licenses/by-nc-nd/4.0/' },
 } as const;
 
 export async function getPublishedPosts(): Promise<CollectionEntry<'posts'>[]> {

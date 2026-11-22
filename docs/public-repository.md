@@ -16,7 +16,7 @@ This repository is public. Everything committed here, including the full git his
 ## Keep in mind
 
 - **Drafts are public too.** A post with `draft: true` is excluded from the built site, but its file is still readable in the repository. Keep unpublished private notes out of the repo.
-- **Images and attachments** may contain metadata (EXIF location, device info). Strip it before committing.
+- **Images and attachments** may contain metadata (EXIF location, device info). Strip it before committing, keeping only the author, copyright, and license of your own photos (see [Content](content.md#license)). Check too that what the photo shows does not reveal a private place or identify other people.
 - **Screenshots and logs** may leak hostnames, IPs, tokens, or personal data. Review and redact them first.
 - **Commit messages and branch names** are public as well.
 - **Git metadata is public.** The author name must not include a machine name, the email must be the public one, and dates must be in UTC, because the time zone hints at the location.

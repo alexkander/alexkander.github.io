@@ -38,11 +38,21 @@ Links that leave the pages of this repository open in a new tab (`target="_blank
 
 ## License
 
-Posts are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/): anyone may share and adapt them, including commercially, as long as they credit the author. This covers the text and the code snippets in each post.
+| Content | License | In short |
+|---|---|---|
+| Text of the posts | [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) | Share and adapt with credit, for non-commercial purposes |
+| Code snippets in the posts | [MIT](https://opensource.org/license/mit) | Any use, keeping the copyright notice |
+| Photos by the author | [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) | Share unmodified with credit, for non-commercial purposes |
+| Demos | Apache 2.0, with a `NOTICE` file | Any use, keeping the license and the credit in `NOTICE` |
+| Profile, CV, projects, products, and the code of this site | None | All rights reserved |
 
-- Every post page ends with the license notice, and the RSS feed carries it in `<copyright>`. Both come from `postLicense` in `src/lib/content.ts`.
-- Only publish material you can license this way. Third-party content in a post (images, diagrams, long quotes) keeps its own license and must be credited next to it, e.g. "Image: Name, CC BY-SA 4.0"; leave it out if its license does not allow reuse.
-- The license applies to posts only. Projects, products, the profile, and the CV are not covered.
+Any other use, such as a commercial one of a text or a photo, needs the author's permission, requested by email.
+
+- **Notices**: every post page ends with the license notice, and the RSS feed carries it in `<copyright>`. Both come from `licenses` in `src/lib/content.ts`. When a license changes, update that file, this section, and `README.md` in the same change.
+- **Photos**: show the credit and the license next to each photo, e.g. "Photo: Alexander Rondón, CC BY-NC-ND 4.0", linking the license. Also write the author, the copyright, and the license in the file's metadata (IPTC/XMP), after stripping everything else (see [Public repository](public-repository.md#keep-in-mind)). Image processing at build time may drop that metadata, so the visible credit is always required.
+- **Demos**: the license lives in each demo's own repository: the full text in `LICENSE`, and in `NOTICE` the name of the demo, the author, and a link to `alexkander.dev`. It covers only the demo's own code; third-party data, maps, and libraries keep their licenses and credits.
+- **Third-party content** in a post (images, diagrams, long quotes) keeps its own license and must be credited next to it, e.g. "Image: Name, CC BY-SA 4.0"; leave it out if its license does not allow reuse. Do not adapt ShareAlike material into a text, because it would have to be published under its license instead.
+- **Contributions** from other people are accepted only if the author can license them under the terms above.
 
 ## CV
 

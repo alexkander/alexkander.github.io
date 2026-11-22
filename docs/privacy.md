@@ -32,7 +32,7 @@ These rules avoid the need for a consent banner and minimize the data processed.
 4. **Analytics must be cookieless, self-hosted, and limited to audience measurement** (see [Analytics](#analytics)), loaded only in production builds.
 5. **No personal data in URLs**, query strings, or analytics events.
 6. **Data minimization.** Collect only what a feature needs, keep it only as long as needed, and never reuse it for another purpose.
-7. **Strip metadata** (EXIF, including GPS location) from images before committing them.
+7. **Strip metadata** (EXIF, including GPS location) from images before committing them, except the author, copyright, and license of the operator's own photos.
 8. **The site stays non-commercial** (see [Non-commercial site](#non-commercial-site)).
 9. **Demos under a subpath follow their own rules** (see [Demos under a subpath](#demos-under-a-subpath)).
 

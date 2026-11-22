@@ -1,7 +1,7 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
 import { profile } from '../data/profile';
-import { getPublishedPosts, postLicense } from '../lib/content';
+import { getPublishedPosts, licenses } from '../lib/content';
 
 export async function GET(context: APIContext) {
   const posts = (await getPublishedPosts()).filter((post) => !post.data.draft);
@@ -9,7 +9,7 @@ export async function GET(context: APIContext) {
     title: profile.name,
     description: profile.tagline,
     site: context.site!,
-    customData: `<copyright>${profile.name}. Posts licensed under ${postLicense.name} (${postLicense.url})</copyright>`,
+    customData: `<copyright>${profile.name}. Text licensed under ${licenses.text.name} (${licenses.text.url}), code under ${licenses.code.name} (${licenses.code.url}), and photos under ${licenses.photos.name} (${licenses.photos.url}), unless noted otherwise</copyright>`,
     items: posts.map((post) => ({
       title: post.data.title,
       description: post.data.description,

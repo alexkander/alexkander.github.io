@@ -26,4 +26,4 @@ pnpm dev
 
 ## License
 
-Posts in `src/content/posts/` are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). No license is granted yet for the rest of the repository.
+In `src/content/posts/`, unless noted otherwise, text is licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/), code snippets under [MIT](https://opensource.org/license/mit), and photos under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). No license is granted for the rest of the repository. See [Content](docs/content.md#license).

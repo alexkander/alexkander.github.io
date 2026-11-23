@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Link from '../components/Link.astro';
 import PostList from '../components/PostList.astro';
 import WorkList from '../components/WorkList.astro';
 import { profile } from '../data/profile';
@@ -33,7 +34,11 @@ const projects = (await getWork('projects')).filter((p) => p.data.featured || p.
 
   <section>
     <h2>{profile.about.title}</h2>
-    <p>{profile.about.text}</p>
+    <p>
+      {profile.about.text}{' '}
+      <Link href={profile.about.employer.url}>{profile.about.employer.name}</Link>{' '}
+      {profile.about.textEnd}
+    </p>
   </section>
 
   <section>

@@ -13,7 +13,9 @@ export const profile = {
   /** Closing sections of the home page. */
   about: {
     title: 'A bit more about me',
-    text: "I decided to study computing when the first computer arrived at home, and before starting university I was already building systems for my school. I've been working as a developer for more than 15 years: first at other people's companies and then, for many years, at a couple that friends from university invited me to start with them, where we worked in small, self-managed teams. For the last 4 years I've been working at intive with a great team.",
+    text: "I decided to study computing when the first computer arrived at home, and before starting university I was already building systems for my school. I've been working as a developer for more than 15 years: first at other people's companies and then, for many years, at a couple that friends from university invited me to start with them, where we worked in small, self-managed teams. For the last 4 years I've been working at",
+    employer: { name: 'intive', url: 'https://www.intive.com/' },
+    textEnd: 'with a great team.',
   },
   offWork: {
     title: "When I'm not coding",

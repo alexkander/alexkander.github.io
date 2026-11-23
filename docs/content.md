@@ -2,7 +2,7 @@
 
 ## Profile data
 
-`src/data/profile.ts` is the single source of truth for personal data: name, tagline, contact links, and the texts of the home page (`intro`, `about`, and `offWork`, written in the first person).
+`src/data/profile.ts` is the single source of truth for personal data: name, tagline, contact links, and the texts written in the first person: `intro` on the home page, and `about` and `offWork` on `/about`.
 
 The profile must not include a location or phone number.
 
@@ -13,11 +13,12 @@ Defined in `src/content.config.ts`. Each entry is a Markdown/MDX file whose file
 | Collection | Folder | Route |
 |---|---|---|
 | `posts` | `src/content/posts/` | `/posts/<slug>/` |
-| `projects` | `src/content/projects/` | `/projects/<slug>/` |
+| `projects` | `src/content/projects/` | None (see below) |
 | `products` | `src/content/products/` | `/products/<slug>/` |
 
 - **Posts** require `title`, `description`, and `date`; optional `updated`, `tags`, and `draft`. Drafts render in `pnpm dev` only, and are excluded from the build and RSS.
-- **Projects and products** share one schema: `title`, `description`, `start` (year), optional `end` (omit for ongoing work), `role`, `client`, `stack`, `platforms`, `url`, `repo`, `status` (`active` | `archived`), and `featured`. Archived projects are listed under "Archive"; featured or active ones appear on the home page.
+- **Projects and products** share one schema: `title`, `description`, `start` (year), optional `end` (omit for ongoing work), `role`, `client`, `stack`, `platforms`, `url`, `repo`, `status` (`active` | `archived`), and `featured`. Archived entries are listed under "Archive".
+- **Projects have no pages**: they were removed from the site until further notice. The collection is kept so they can come back.
 - Projects and products only describe the work and link to its own website (`url`) and source (`repo`): no prices, buy buttons, or sign-up forms (see [Privacy](privacy.md#non-commercial-site)).
 - The Products nav link is commented out in `src/layouts/Base.astro` until the first product exists.
 

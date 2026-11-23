@@ -1,13 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import Link from '../components/Link.astro';
 import PostList from '../components/PostList.astro';
-import WorkList from '../components/WorkList.astro';
 import { profile } from '../data/profile';
-import { getPublishedPosts, getWork } from '../lib/content';
+import { getPublishedPosts } from '../lib/content';
 
 const posts = (await getPublishedPosts()).slice(0, 5);
-const projects = (await getWork('projects')).filter((p) => p.data.featured || p.data.status === 'active').slice(0, 5);
 ---
 
 <Base>
@@ -20,29 +17,5 @@ const projects = (await getWork('projects')).filter((p) => p.data.featured || p.
     <h2>Latest posts</h2>
     <PostList posts={posts} />
     <a href="/posts/">All posts →</a>
-  </section>
-
-  {
-    projects.length > 0 && (
-      <section>
-        <h2>Projects</h2>
-        <WorkList entries={projects} base="/projects/" />
-        <a href="/projects/">All projects →</a>
-      </section>
-    )
-  }
-
-  <section>
-    <h2>{profile.about.title}</h2>
-    <p>
-      {profile.about.text}{' '}
-      <Link href={profile.about.employer.url}>{profile.about.employer.name}</Link>{' '}
-      {profile.about.textEnd}
-    </p>
-  </section>
-
-  <section>
-    <h2>{profile.offWork.title}</h2>
-    <p>{profile.offWork.text}</p>
   </section>
 </Base>

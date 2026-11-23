@@ -1,7 +1,8 @@
 # Status
 
-- The project is scaffolded: Astro, content collections, home, posts, projects, products, RSS, and sitemap.
-- There are no projects yet. Recent AI and home lab work is still to be added.
+- The project is scaffolded: Astro, content collections, home, posts, products, RSS, and sitemap.
+- There is no projects page: it was removed until further notice. The `projects` collection is kept, still empty.
+- `/about` holds the longer bio (`src/pages/about.astro`), linked from the navigation.
 - `/uses` lists the tools in use (`src/pages/uses.astro`), linked from the navigation.
 - There is no CV page: it was removed until further notice.
 - Both deployments (GitHub Pages and self-hosted) are in place (see [Deployment](deployment.md)).

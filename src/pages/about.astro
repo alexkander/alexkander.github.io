@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Link from '../components/Link.astro';
+import { profile } from '../data/profile';
+---
+
+<Base title="About" description={`More about ${profile.name}.`}>
+  <article>
+    <h1>About</h1>
+
+    <h2>{profile.about.title}</h2>
+    <p>
+      {profile.about.text}{' '}
+      <Link href={profile.about.employer.url}>{profile.about.employer.name}</Link>{' '}
+      {profile.about.textEnd}
+    </p>
+
+    <h2>{profile.offWork.title}</h2>
+    <p>{profile.offWork.text}</p>
+  </article>
+</Base>

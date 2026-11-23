@@ -18,6 +18,14 @@ Common to those references, and to be kept in mind during development:
 - Navigation with 3 to 5 links.
 - Pages such as `/now` or `/uses`.
 
+## Mobile-first
+
+Every implementation is mobile-first:
+
+- Write the base styles for the narrowest screen (320px), and add wider layouts with `min-width` media queries. Do not use `max-width` queries to adapt a desktop layout down.
+- Design and check each change on a phone width first, then on wider screens.
+- Images get `srcset`/`sizes` (Astro's `<Picture>` or `<Image>`) so phones download only the size they show.
+
 ## Themes
 
 - The site has a **light theme and a dark theme**, both first-class: every component must be designed and checked in both.

@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Link from '../components/Link.astro';
 import PostList from '../components/PostList.astro';
 import { profile } from '../data/profile';
 import { getPublishedPosts } from '../lib/content';
@@ -8,7 +10,15 @@ const posts = (await getPublishedPosts()).slice(0, 5);
 ---
 
 <Base>
-  <h1 class="visually-hidden">{profile.name}</h1>
+  <header class="profile">
+    <h1 class="visually-hidden">{profile.name}</h1>
+    <ul class="meta muted">
+      <li><Icon name="mail" /><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+      <li><Icon name="github" /><Link href={profile.links.github}>GitHub</Link></li>
+      <li><Icon name="linkedin" /><Link href={profile.links.linkedin}>LinkedIn</Link></li>
+    </ul>
+  </header>
+
   <section>
     {profile.intro.map((paragraph) => <p>{paragraph}</p>)}
   </section>
@@ -19,3 +29,30 @@ const posts = (await getPublishedPosts()).slice(0, 5);
     <a href="/posts/">All posts →</a>
   </section>
 </Base>
+
+<style>
+  .profile {
+    margin-top: 0.5rem;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.95rem;
+  }
+  .meta li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .meta a {
+    color: inherit;
+  }
+  .meta :global(svg) {
+    width: 1rem;
+    height: 1rem;
+  }
+</style>

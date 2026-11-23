@@ -2,6 +2,8 @@
 
 export const profile = {
   name: 'Alexander Rondón',
+  /** Username shown as @handle; the same one as on GitHub. */
+  handle: 'alexkander',
   title: 'Software Engineer',
   tagline: 'Software engineer building scalable backend systems, with a soft spot for home labs, AI, and hardware.',
   /** Introduction of the home page, one string per paragraph. */

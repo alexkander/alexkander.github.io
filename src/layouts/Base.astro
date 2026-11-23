@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { title, description = profile.tagline } = Astro.props;
-const pageTitle = title ? `${title} · ${profile.name}` : `${profile.name} · ${profile.title}`;
+const pageTitle = title ? `${title} · ${profile.name}` : `@${profile.handle}`;
 const path = Astro.url.pathname;
 const nav = [
   { href: '/posts/', label: 'Posts' },
@@ -43,7 +43,7 @@ const nav = [
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <nav aria-label="Main">
-        <a href="/" class="home" aria-current={path === '/' ? 'page' : undefined}>{profile.name}</a>
+        <a href="/" class="home" aria-current={path === '/' ? 'page' : undefined}>@{profile.handle}</a>
         {
           nav.map((item) => (
             <a href={item.href} aria-current={path.startsWith(item.href) ? (path === item.href ? 'page' : 'true') : undefined}>
@@ -85,8 +85,9 @@ const nav = [
 <style>
   .site-header nav {
     display: flex;
+    flex-wrap: wrap;
     align-items: baseline;
-    gap: 1rem;
+    gap: 0.25rem 1rem;
     padding: 1.5rem 0;
   }
   .site-header a {
@@ -98,8 +99,16 @@ const nav = [
     text-decoration: underline;
   }
   .site-header .home {
-    margin-right: auto;
-    font-weight: 600;
+    flex-basis: 100%;
+    font-size: 1.5rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  @media (min-width: 22.5rem) {
+    .site-header .home {
+      flex-basis: auto;
+      margin-right: auto;
+    }
   }
   .site-footer {
     display: flex;

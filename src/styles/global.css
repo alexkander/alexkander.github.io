@@ -27,8 +27,14 @@
   box-sizing: border-box;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
+  overflow-wrap: break-word;
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-sans);
@@ -52,6 +58,13 @@ h1,
 h2,
 h3 {
   line-height: 1.25;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
 }
 
 code,

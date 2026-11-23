@@ -36,6 +36,20 @@ if [ -d dist/_astro ]; then
   s3 sync dist/_astro "$bucket/_astro" --cache-control "public, max-age=31536000, immutable"
 fi
 s3 sync dist "$bucket/" --exclude "_astro/*"
-s3 sync dist "$bucket/" --delete
+
+# The dry run only lists what `sync --delete` would remove; a batch request deletes it.
+stale=$(s3 sync dist "$bucket/" --delete --dryrun | sed -n "s|^(dryrun) delete: $bucket/||p")
+if [ -n "$stale" ]; then
+  while mapfile -t -n 1000 keys && [ "${#keys[@]}" -gt 0 ]; do
+    batch=$(printf '%s\n' "${keys[@]}" | jq -Rn '{Objects: [inputs | {Key: .}]}')
+    errors=$(aws s3api delete-objects --bucket "${bucket#s3://}" --delete "$batch" \
+      --query 'length(Errors || `[]`)' --output text)
+    if [ "$errors" != 0 ]; then
+      echo "Could not delete $errors stale file(s)." >&2
+      exit 1
+    fi
+    printf 'delete: %s\n' "${keys[@]}"
+  done <<< "$stale"
+fi
 
 echo "Deployed $(git rev-parse --short HEAD) to $bucket"

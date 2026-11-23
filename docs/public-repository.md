@@ -10,7 +10,7 @@ This repository is public. Everything committed here, including the full git his
 - **Home lab internals**: internal IPs, hostnames, ports, network topology, service URLs that are not meant to be public, the names of private repositories, or how the infrastructure is built, secured, logged, and backed up. A name that does not resolve publicly is still internal.
 - **Security weaknesses**: known limits of a protection, unpatched issues, or how something could be bypassed. Keep them in the private infrastructure docs.
 - **Business plans and legal reasoning**: future products, pricing, company structure, tax or legal strategy, and internal compliance records. Document the resulting rule, not the reasoning behind it.
-- **Confidential work information**: employer or client code, internal names, metrics, or details covered by NDAs. Describe past work at the level already public in the CV.
+- **Confidential work information**: employer or client code, internal names, metrics, or details covered by NDAs. Describe past work only in general terms.
 - **Source documents**: CV files, exports, or other private documents used as input; only the curated content in the repo is published.
 
 ## Keep in mind

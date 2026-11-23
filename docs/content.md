@@ -2,7 +2,7 @@
 
 ## Profile data
 
-`src/data/profile.ts` is the single source of truth for personal and professional data (summary, experience, skills, education, interests). It feeds both the home page and the `/cv` page, so update it there and both stay in sync.
+`src/data/profile.ts` is the single source of truth for personal data: name, tagline, contact links, and the texts of the home page (`intro`, `about`, and `offWork`, written in the first person).
 
 The profile must not include a location or phone number.
 
@@ -44,7 +44,7 @@ Links that leave the pages of this repository open in a new tab (`target="_blank
 | Code snippets in the posts | [MIT](https://opensource.org/license/mit) | Any use, keeping the copyright notice |
 | Photos by the author | [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) | Share unmodified with credit, for non-commercial purposes |
 | Demos | Apache 2.0, with a `NOTICE` file | Any use, keeping the license and the credit in `NOTICE` |
-| Profile, CV, projects, products, and the code of this site | None | All rights reserved |
+| Profile, projects, products, and the code of this site | None | All rights reserved |
 
 Any other use, such as a commercial one of a text or a photo, needs the author's permission, requested by email.
 
@@ -53,10 +53,6 @@ Any other use, such as a commercial one of a text or a photo, needs the author's
 - **Demos**: the license lives in each demo's own repository: the full text in `LICENSE`, and in `NOTICE` the name of the demo, the author, and a link to `alexkander.dev`. It covers only the demo's own code; third-party data, maps, and libraries keep their licenses and credits.
 - **Third-party content** in a post (images, diagrams, long quotes) keeps its own license and must be credited next to it, e.g. "Image: Name, CC BY-SA 4.0"; leave it out if its license does not allow reuse. Do not adapt ShareAlike material into a text, because it would have to be published under its license instead.
 - **Contributions** from other people are accepted only if the author can license them under the terms above.
-
-## CV
-
-`/cv` renders the profile data as a CV. It is not linked in the main navigation. Its print styles hide the site chrome, so printing the page to PDF from the browser produces the PDF (there is no button for it). Automated PDF generation at build time is pending.
 
 ## Privacy page
 

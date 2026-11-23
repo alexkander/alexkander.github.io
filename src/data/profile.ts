@@ -1,152 +1,27 @@
-// Single source of truth for the profile shown on the site and on /cv.
-
-export interface Role {
-  title: string;
-  company: string;
-  // 'YYYY-MM'; omit `end` for the current role.
-  start: string;
-  end?: string;
-  summary?: string;
-  highlights?: string[];
-  engagements?: { name: string; start: string; end?: string; highlights: string[] }[];
-}
+// Single source of truth for the profile shown on the site.
 
 export const profile = {
   name: 'Alexander Rondón',
   title: 'Software Engineer',
   tagline: 'Software engineer building scalable backend systems, with a soft spot for home labs, AI, and hardware.',
-  summary:
-    'Software engineer with 15+ years in IT, building scalable, high-quality software for backend, web, and mobile. ' +
-    'Co-founded and ran two small software companies, leading teams of 4–6 developers while staying hands-on as a full-stack engineer. ' +
-    'Today works mainly with Node.js and TypeScript on microservices running on AWS Kubernetes, with a strong focus on testing, reliability, and observability.',
+  /** Introduction of the home page, one string per paragraph. */
+  intro: [
+    "Hi everyone, I'm a developer. I like taking an idea from start to finish: turning it into code that works and learning along the way.",
+    'I spend a huge amount of time working with AI coding agents, which in turn have given me the time and support to organize many ideas I had pending.',
+    "Here I'll publish apps, demos, proofs of concept, and experiments from my ongoing learning about software, AI, home labs, and self-hosting, along with other things I want to keep a record of. Many of them will be improved or made directly with agents: I decide what to do, and I review and test the result. Publishing them is my way of giving each idea a proper ending, getting it out of my head, and making room for new ones. I hope they help someone else.",
+  ],
+  /** Closing sections of the home page. */
+  about: {
+    title: 'A bit more about me',
+    text: "I decided to study computing when the first computer arrived at home, and before starting university I was already building systems for my school. I've been working as a developer for more than 15 years: first at other people's companies and then, for many years, at a couple that friends from university invited me to start with them, where we worked in small, self-managed teams. For the last 4 years I've been working at intive with a great team.",
+  },
+  offWork: {
+    title: "When I'm not coding",
+    text: "I'm usually in the middle of some DIY project: hardware, CAD parts to 3D print, or things made of wood. Yes, you can buy almost all of it ready-made, but I like to overcomplicate things, just for fun. I also enjoy film, photography (including the night sky), and learning to play instruments. And yes, that's too many hobbies.",
+  },
   email: 'me@alexkander.dev',
   links: {
     github: 'https://github.com/alexkander',
     linkedin: 'https://www.linkedin.com/in/arondn2/',
   },
-
-  experience: [
-    {
-      title: 'Senior Software Engineer',
-      company: 'intive',
-      start: '2022-07',
-      engagements: [
-        {
-          name: 'W. W. Norton — new ebook reader',
-          start: '2023-07',
-          highlights: [
-            'Optimized and extended NestJS, MongoDB, and PostgreSQL modules, increasing scalability in an AWS Kubernetes microservices architecture.',
-            'Achieved 99% unit test coverage.',
-            'Automated report generation, testing, and code quality metrics with GitLab pipelines.',
-            'Integrated observability with Sentry and OpenTelemetry (Grafana, Prometheus, Zipkin).',
-            'Investigated and resolved issues across interconnected applications to keep the system stable.',
-          ],
-        },
-        {
-          name: 'Madison Square Garden — MSG+ streaming app',
-          start: '2022-08',
-          end: '2023-07',
-          highlights: [
-            'Developed and maintained the MSG+ streaming web application for smart TVs with React and TypeScript.',
-            'Integrated payment modules, video player libraries, and analytics vendors.',
-            'Owned the cross-vendor authorization integration.',
-          ],
-        },
-      ],
-    },
-    {
-      title: 'Freelance Software Developer',
-      company: 'Uppersky',
-      start: '2018-11',
-      end: '2022-07',
-      highlights: ['Built mobile applications with React Native and Firebase.'],
-    },
-    {
-      title: 'Manager and Software Developer',
-      company: 'MedAndSoft',
-      start: '2017-11',
-      end: '2022-07',
-      highlights: [
-        'Built Angular applications with consistent cross-device performance.',
-        'Designed and maintained APIs with LoopBack (Express/Node.js) and Firebase.',
-        'Implemented CI/CD with Docker and Jenkins.',
-        'Practiced TDD with Jest and Mocha.',
-        'Led the development team and ran planning, project execution, and company administration.',
-      ],
-    },
-    {
-      title: 'Co-founder, Manager and Software Developer',
-      company: 'Sir Ideas',
-      start: '2013-01',
-      end: '2017-11',
-      highlights: [
-        'Built AngularJS and Ionic applications for web, Android, and iOS.',
-        'Created APIs with Laravel and LoopBack (Express/Node.js).',
-        'Managed the Linux servers used for client deployments.',
-        'Mentored and coordinated the development team, and ran planning and project execution.',
-      ],
-    },
-    {
-      title: 'Web Developer',
-      company: 'Hostienda',
-      start: '2011-11',
-      end: '2012-12',
-      highlights: ['Built online stores with WordPress.'],
-    },
-    {
-      title: 'Software Developer and Database Manager',
-      company: 'TecnoAp',
-      start: '2010-10',
-      end: '2011-07',
-      highlights: [
-        'Built Ruby on Rails modules for an internal recruitment system.',
-        'Built PHP Symfony modules for a purchasing and inventory management system.',
-      ],
-    },
-  ] satisfies Role[],
-
-  education: [
-    {
-      degree: "Bachelor's Degree in Computer Engineering",
-      school: 'Universidad Nacional Experimental de Guayana',
-      start: '2007',
-      end: '2015',
-    },
-  ],
-
-  teaching: [
-    {
-      title: 'Assistant Professor — Database Systems I, Programming I and II',
-      school: 'Universidad Nacional Experimental de Guayana',
-      start: '2009-01',
-      end: '2012-07',
-    },
-  ],
-
-  openSource: [
-    'Contributions to LoopBack 4, the open-source Node.js API framework.',
-    'Small libraries published as npm packages.',
-  ],
-
-  skills: [
-    { group: 'Languages', items: ['TypeScript', 'JavaScript', 'SQL'] },
-    { group: 'Backend', items: ['Node.js', 'NestJS', 'Express', 'LoopBack'] },
-    { group: 'Frontend & mobile', items: ['React', 'React Native', 'Angular'] },
-    { group: 'Data', items: ['PostgreSQL', 'MongoDB', 'Firebase'] },
-    { group: 'Infrastructure', items: ['AWS', 'Kubernetes', 'Docker', 'Terraform', 'Linux servers'] },
-    { group: 'CI/CD', items: ['GitHub Actions', 'GitLab CI', 'Jenkins', 'Git'] },
-    { group: 'Quality & observability', items: ['TDD', 'Jest', 'Mocha', 'Sentry', 'OpenTelemetry', 'Grafana', 'Prometheus', 'Zipkin'] },
-  ],
-
-  interests: ['Hardware development', 'DIY projects', 'CAD modeling and 3D printing', 'Woodworking', 'Learning music', 'Astrophotography'],
 };
-
-export function formatMonth(value: string): string {
-  const [year, month] = value.split('-').map(Number);
-  if (!month) return `${year}`;
-  return new Date(Date.UTC(year, month - 1)).toLocaleDateString('en-US', { year: 'numeric', month: 'short', timeZone: 'UTC' });
-}
-
-export function formatRange(start: string, end?: string): string {
-  return `${formatMonth(start)} – ${end ? formatMonth(end) : 'Present'}`;
-}

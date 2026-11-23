@@ -16,7 +16,7 @@ Content lives in the repo as Markdown/MDX, managed with Astro content collection
 | `projects` | Projects built or in progress |
 | `products` | Products built or maintained |
 
-Profile data (experience, skills, etc.) lives in `src/data/profile.ts` instead of a collection.
+Profile data lives in `src/data/profile.ts` instead of a collection.
 
 Publishing a post means adding an `.mdx` file to its collection and pushing. A git-based CMS (Keystatic or Decap) may be added later without changing the storage model.
 
@@ -29,7 +29,6 @@ Traffic is measured with self-hosted, cookieless Umami (`src/components/Analytic
 - RSS feed, sitemap, tags.
 - Syntax highlighting (Shiki).
 - Open Graph images for posts.
-- CV generated from the repo: a `/cv` page and a downloadable PDF built from the same profile data as the rest of the site, so both stay in sync.
 
 ## Out of scope
 

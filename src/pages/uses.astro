@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import Link from '../components/Link.astro';
+import { repositoryUrl } from '../lib/build';
+---
+
+<Base title="Uses" description="The tools I work with every day.">
+  <article>
+    <h1>What I use</h1>
+    <p>The tools I work with every day, and a few more. The list changes often; this is the current one.</p>
+
+    <h2>Development</h2>
+    <ul>
+      <li><strong>Coding agents:</strong> Claude Code, and I try others now and then. Most of what I build lately starts here.</li>
+      <li><strong>Editor:</strong> VS Code or Cursor.</li>
+      <li><strong>Terminal:</strong> Alacritty, with tmux and Starship.</li>
+      <li><strong>System:</strong> Linux, with Arch, Hyprland, and Omarchy.</li>
+      <li><strong>Languages:</strong> TypeScript most of the time, Python, which I am just getting started with, and SQL when needed.</li>
+      <li><strong>Backend:</strong> Node.js, with NestJS or Express.</li>
+      <li><strong>Frontend and mobile:</strong> React and React Native. This site is built with Astro.</li>
+      <li><strong>Data:</strong> PostgreSQL and MongoDB.</li>
+      <li><strong>Testing and observability:</strong> Jest, Sentry, and OpenTelemetry, with Grafana and Prometheus.</li>
+    </ul>
+
+    <h2>Infrastructure</h2>
+    <ul>
+      <li>Kubernetes at home, managed with GitOps (Flux). Docker for the small stuff.</li>
+      <li>Self-hosting whatever I can: my analytics (Umami), my storage, and this site.</li>
+      <li>At work: AWS, Kubernetes, and some Terraform. CI with GitHub Actions and GitLab CI.</li>
+    </ul>
+
+    <h2>This site</h2>
+    <p>
+      Built with Astro, with no cookies, and with analytics on my own server. It is published to two places at once:
+      GitHub Pages and my home lab. The <Link href={repositoryUrl}>code is on GitHub</Link>.
+    </p>
+
+    <h2>Before</h2>
+    <p>
+      Before all this: years of Angular, Laravel, and LoopBack, some Ruby on Rails and Symfony, and a start with Visual
+      Basic, Access, and MySQL.
+    </p>
+  </article>
+</Base>

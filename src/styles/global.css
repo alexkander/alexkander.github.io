@@ -5,8 +5,8 @@
   --muted: #6b6b6b;
   --border: #e5e5e2;
   --accent: #1a1a1a;
-  --font-sans: system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-sans: 'Atkinson Hyperlegible Next Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Atkinson Hyperlegible Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
   --measure: 42rem;
   color-scheme: light dark;
 }

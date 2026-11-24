@@ -17,6 +17,7 @@ pnpm dev
 - [Architecture](docs/architecture.md)
 - [Development](docs/development.md)
 - [Content](docs/content.md)
+- [Third-party requirements](docs/third-party.md): licenses and terms of everything the site uses
 - [Deployment](docs/deployment.md)
 - [Design](docs/design.md)
 - [Accessibility](docs/accessibility.md)

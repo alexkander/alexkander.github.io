@@ -18,6 +18,13 @@ Common to those references, and to be kept in mind during development:
 - Navigation with 3 to 5 links.
 - Pages such as `/now` or `/uses`.
 
+## Typography
+
+- One family for all the text, and a monospaced one for code: [Atkinson Hyperlegible Next](https://www.brailleinstitute.org/freefont/) and Atkinson Hyperlegible Mono, designed by the Braille Institute for legibility. Hierarchy comes from size and weight, not from more fonts.
+- Both are variable fonts, installed from Fontsource (`@fontsource-variable/atkinson-hyperlegible-next` and `-mono`), imported in `src/layouts/Base.astro`, and set in `--font-sans` and `--font-mono` in `src/styles/global.css`. Astro bundles them, so they are served from the site itself, never from a font service (see [Privacy](privacy.md#design-rules)).
+- The Latin subset of the text font is preloaded; other subsets load only when a page uses their characters.
+- Licensed under the SIL Open Font License 1.1, which allows self-hosting. The copyright notices and the full license are served at `/fonts/OFL.txt` (`public/fonts/OFL.txt`); update it when a font is added or changed (see [Third-party requirements](third-party.md)).
+
 ## Mobile-first
 
 Every implementation is mobile-first:

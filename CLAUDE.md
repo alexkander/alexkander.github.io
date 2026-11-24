@@ -12,6 +12,7 @@ Keep this file as an index: put content in `docs/` and import it here.
 @docs/architecture.md
 @docs/development.md
 @docs/content.md
+@docs/third-party.md
 @docs/deployment.md
 @docs/design.md
 @docs/accessibility.md

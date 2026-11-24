@@ -1,4 +1,7 @@
 ---
+import '@fontsource-variable/atkinson-hyperlegible-next';
+import '@fontsource-variable/atkinson-hyperlegible-mono';
+import fontUrl from '@fontsource-variable/atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-wght-normal.woff2?url';
 import '../styles/global.css';
 import { profile } from '../data/profile';
 import { commit, repositoryUrl } from '../lib/build';
@@ -26,6 +29,7 @@ const nav = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate" type="application/rss+xml" title={profile.name} href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -92,17 +96,19 @@ const nav = [
   }
   .site-header a {
     font-size: 1rem;
-    text-decoration: none;
   }
-  .site-header a:hover,
   .site-header a[aria-current]:not(.home) {
-    text-decoration: underline;
+    text-decoration-thickness: 2px;
   }
   .site-header .home {
     flex-basis: 100%;
     font-size: 1.5rem;
     font-weight: 700;
     white-space: nowrap;
+    text-decoration: none;
+  }
+  .site-header .home:hover {
+    text-decoration: underline;
   }
   @media (min-width: 22.5rem) {
     .site-header .home {

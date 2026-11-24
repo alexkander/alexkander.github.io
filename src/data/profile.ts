@@ -6,6 +6,8 @@ export const profile = {
   handle: 'alexkander',
   title: 'Software Engineer',
   tagline: 'Software engineer building scalable backend systems, with a soft spot for home labs, AI, and hardware.',
+  /** Description of the photo on the home page (`src/assets/profile.jpg`). */
+  photoAlt: 'Alexander smiling, leaning against a stone doorway in Inca ruins, with a mountain behind him.',
   /** Introduction of the home page, one string per paragraph. */
   intro: [
     "Hi everyone, I'm a developer. I like taking an idea from start to finish: turning it into code that works and learning along the way.",

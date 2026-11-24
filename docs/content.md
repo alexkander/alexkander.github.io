@@ -6,6 +6,8 @@
 
 The profile must not include a location or phone number.
 
+The photo on the home page is `src/assets/profile.jpg` (a square crop, stripped of metadata, 672 px: three times the size it is shown at), described by `photoAlt`. Astro generates the optimized AVIF and WebP versions at build time. It is part of the profile, so it is not covered by the photo license (see [License](#license)).
+
 ## Collections
 
 Defined in `src/content.config.ts`. Each entry is a Markdown/MDX file whose filename becomes its URL slug.

@@ -1,22 +1,36 @@
 ---
+import { Picture } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import Link from '../components/Link.astro';
 import PostList from '../components/PostList.astro';
 import { profile } from '../data/profile';
 import { getPublishedPosts } from '../lib/content';
+import photo from '../assets/profile.jpg';
 
 const posts = (await getPublishedPosts()).slice(0, 5);
 ---
 
 <Base>
   <header class="profile">
-    <h1 class="visually-hidden">{profile.name}</h1>
-    <ul class="meta muted">
-      <li><Icon name="mail" /><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
-      <li><Icon name="github" /><Link href={profile.links.github}>GitHub</Link></li>
-      <li><Icon name="linkedin" /><Link href={profile.links.linkedin}>LinkedIn</Link></li>
-    </ul>
+    <Picture
+      src={photo}
+      alt={profile.photoAlt}
+      formats={['avif', 'webp']}
+      widths={[224, 448, 672]}
+      sizes="14rem"
+      loading="eager"
+      fetchpriority="high"
+      class="avatar"
+    />
+    <div class="info">
+      <h1>{profile.name}</h1>
+      <ul class="meta muted">
+        <li><Icon name="mail" /><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+        <li><Icon name="github" /><Link href={profile.links.github}>GitHub</Link></li>
+        <li><Icon name="linkedin" /><Link href={profile.links.linkedin}>LinkedIn</Link></li>
+      </ul>
+    </div>
   </header>
 
   <section>
@@ -32,11 +46,33 @@ const posts = (await getPublishedPosts()).slice(0, 5);
 
 <style>
   .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
     margin-top: 0.5rem;
+  }
+  .profile > :global(picture) {
+    flex: none;
+  }
+  .info {
+    text-align: center;
+  }
+  .info h1 {
+    margin: 0 0 0.75rem;
+    font-size: 1.75rem;
+  }
+  .avatar {
+    display: block;
+    width: 14rem;
+    height: 14rem;
+    border-radius: 50%;
+    border: 1px solid var(--border);
   }
   .meta {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 0.35rem 1rem;
     margin: 0;
     padding: 0;
@@ -54,5 +90,20 @@ const posts = (await getPublishedPosts()).slice(0, 5);
   .meta :global(svg) {
     width: 1rem;
     height: 1rem;
+  }
+  @media (min-width: 30rem) {
+    .profile {
+      flex-direction: row;
+    }
+    .info {
+      text-align: left;
+    }
+    .info h1 {
+      font-size: 2rem;
+    }
+    .meta {
+      flex-direction: column;
+      justify-content: flex-start;
+    }
   }
 </style>
